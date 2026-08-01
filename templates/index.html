@@ -1,0 +1,184 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+  Home | Royals Events
+{% endblock %}
+
+{% block content %}
+  <!-- Hero section -->
+
+  <section class="hero" style="background:
+        linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+        url('{{ homepage.hero_image.url }}');">
+    <div class="hero-content">
+      <h1>{{ homepage.hero_title }}</h1>
+
+      <p>{{ homepage.hero_description }}</p>
+
+      <div class="hero-buttons">
+        <a href="{% url 'create_booking' %}" class="btn btn-primary">Book Event</a>
+        <a href="#halls" class="btn btn-secondary">Explore Halls</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- HALL SECTION -->
+
+  <section id="halls">
+    <div class="section-title">
+      <h2>Our Premium Halls</h2>
+      <p>Choose the perfect hall for your special event</p>
+    </div>
+
+    <div class="hall-container">
+      {% for hall in halls %}
+        <div class="hall-card">
+          <img src="{{ hall.image.url }}" alt="{{ hall.name }}" />
+          <div class="hall-info">
+            <h3>{{ hall.name }}</h3>
+            <p>{{ hall.description }}</p>
+            <p>Capacity : {{ hall.capacity }} Guests</p>
+            <p>Location : {{ hall.location }}</p>
+            <div class="price">₹{{ hall.price }}</div>
+            <a href="{% url 'hall_detail' hall.slug %}">View Details</a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- ================= ROOMS & ACCOMMODATION SECTION ================= -->
+
+  <section id="rooms">
+    <div class="section-title">
+      <h2>Groom and bride Rooms & lexury Rooms</h2>
+      <p>Luxury accommodation for bride, groom and guests</p>
+    </div>
+
+    <div class="hall-container">
+      <!-- BRIDAL ROOM -->
+      {% for room in rooms %}
+        <div class="hall-card">
+          <img src="{{ room.image.url }}" alt="{{ room.name }}" />
+
+          <div class="hall-info">
+            <h3>{{ room.name }}</h3>
+
+            <p>{{ room.description }}</p>
+
+            <p>
+              <strong>Facilities :</strong>
+              {% for feature in room.features.all %}
+                {{ feature.name }}{% if not forloop.last %}, {% endif %}
+              {% endfor %}
+            </p>
+
+            <div class="price">₹{{ room.price }} / Night</div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- CATERING -->
+
+  <section id="catering">
+    <div class="section-title">
+      <h2>Catering Packages</h2>
+      <p>Delicious menus for every celebration</p>
+    </div>
+
+    <div class="menu-container">
+
+     {% for package in packages %}
+
+      <div class="menu-card">
+
+        <div class="menu-image">
+
+          {% if package.image %}
+            <img src="{{ package.image.url }}" alt="{{ package.name }}">
+          {% endif %}
+
+          {% if package.badge %}
+            <span class="badge">{{ package.badge }}</span>
+          {% endif %}
+
+        </div>
+
+        <div class="menu-content">
+
+          <h3>{{ package.name }}</h3>
+
+          <p>{{ package.description|truncatewords:15 }}</p>
+
+          <ul>
+
+            {% for feature in package.features.all|slice:":4" %}
+              <li>{{ feature.name }}</li>
+            {% endfor %}
+
+          </ul>
+
+          <div class="price">
+            ₹{{ package.price }} <span>/ Plate</span>
+          </div>
+
+          <a href="{% url 'catering' %}" class="menu-btn">
+            View Details
+          </a>
+
+        </div>
+
+      </div>
+
+     {% endfor %}
+
+    </div>
+</section>
+
+  <!-- FEATURES -->
+
+  {% comment %} <section class="features" id="features">
+    <div class="section-title">
+      <h2 style="color:white;">Why Choose Us</h2>
+      <p style="color:#ccc;">Everything you need for a perfect event</p>
+    </div>
+
+    <div class="feature-container">
+      {% for feature in features %}
+        <div class="feature-box">
+          <i class="fa-solid {{ feature.icon }}"></i>
+          <h3>{{ feature.title }}</h3>
+          <p>{{ feature.description }}</p>
+        </div>
+      {% endfor %}
+    </div>
+  </section> {% endcomment %}
+
+  <!-- contect us -->
+  <section id="contact">
+    <div class="section-title">
+      <h2>Contact Us</h2>
+      <p>Get in touch with our event experts</p>
+    </div>
+
+    <div class="contact-container">
+      <div class="contact-card">
+        <h3>📍 Address</h3>
+        <p>{{ contact.address }}</p>
+      </div>
+
+      <div class="contact-card">
+        <h3>📞 Phone</h3>
+        <p>+91 {{ contact.phone }}</p>
+      </div>
+
+      <div class="contact-card">
+        <h3>✉️ Email</h3>
+        <p>{{ contact.email }}</p>
+      </div>
+    </div>
+  </section>
+{% endblock %}

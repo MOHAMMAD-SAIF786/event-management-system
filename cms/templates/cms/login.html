@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Royal CMS Login</title>
+
+    <link rel="stylesheet" href="{% static 'cms/css/login.css' %}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+  </head>
+
+  <body>
+    <div class="login-page">
+      <!-- Background Overlay -->
+      <div class="overlay"></div>
+
+      <!-- Floating Shapes -->
+      <span class="shape one"></span>
+      <span class="shape two"></span>
+      <span class="shape three"></span>
+
+      <div class="login-card">
+        <div class="login-left">
+          <h1>Royal CMS</h1>
+
+          <p>Professional Event Management Dashboard</p>
+
+          <img src="{% static 'cms/images/dashboard.svg' %}" alt="Dashboard Illustration" />
+        </div>
+
+        <div class="login-right">
+          <h2>Admin Login</h2>
+
+          <form method="post">
+            {% csrf_token %}
+
+            <div class="input-box">
+              <i class="fa-solid fa-user"></i>
+
+              <input type="text" name="username" placeholder="Username" required />
+            </div>
+
+            <div class="input-box">
+              <i class="fa-solid fa-lock"></i>
+
+              <input type="password" name="password" placeholder="Password" required />
+            </div>
+
+            <button type="submit">Login</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script src="{% static 'cms/js/login.js' %}"></script>
+  </body>
+</html>

@@ -1,0 +1,206 @@
+/* =========================================
+   EDIT CUSTOMER PAGE
+========================================= */
+
+.edit-wrapper {
+
+    max-width: 900px;
+
+    margin: 40px auto;
+
+    padding: 0 20px;
+
+}
+
+.edit-wrapper form {
+
+    background: #fff;
+
+    padding: 40px;
+
+    border-radius: 24px;
+
+    box-shadow: 0 20px 50px rgba(0, 0, 0, .08);
+
+}
+
+.edit-wrapper h2 {
+
+    font-size: 30px;
+
+    font-weight: 700;
+
+    margin-bottom: 35px;
+
+    color: #222;
+
+}
+
+
+/* =========================================
+   FORM GROUP
+========================================= */
+
+.form-group {
+
+    margin-bottom: 25px;
+
+}
+
+.form-group label {
+
+    display: block;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    margin-bottom: 10px;
+
+    color: #555;
+
+}
+
+.form-group input,
+
+.form-group textarea {
+
+    width: 100%;
+
+    padding: 15px 18px;
+
+    border: 1px solid #ddd;
+
+    border-radius: 14px;
+
+    font-size: 15px;
+
+    transition: .3s;
+
+    background: #fafafa;
+
+}
+
+.form-group input:focus,
+
+.form-group textarea:focus {
+
+    outline: none;
+
+    border-color: #4F46E5;
+
+    background: #fff;
+
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, .12);
+
+}
+
+
+/* =========================================
+   BUTTONS
+========================================= */
+
+.btn-group {
+
+    display: flex;
+
+    gap: 15px;
+
+    margin-top: 35px;
+
+}
+
+.save-btn {
+
+    background: #4F46E5;
+
+    color: #fff;
+
+    padding: 14px 30px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: .3s;
+
+}
+
+.save-btn:hover {
+
+    background: #3730A3;
+
+    transform: translateY(-2px);
+
+}
+
+.cancel-btn {
+
+    background: #f3f4f6;
+
+    color: #444;
+
+    padding: 14px 30px;
+
+    border-radius: 12px;
+
+    text-decoration: none;
+
+    font-weight: 600;
+
+    transition: .3s;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+}
+
+.cancel-btn:hover {
+
+    background: #e5e7eb;
+
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media(max-width:768px) {
+
+    .edit-wrapper form {
+
+        padding: 25px;
+
+    }
+
+    .edit-wrapper h2 {
+
+        font-size: 24px;
+
+    }
+
+    .btn-group {
+
+        flex-direction: column;
+
+    }
+
+    .save-btn,
+
+    .cancel-btn {
+
+        width: 100%;
+
+    }
+
+}

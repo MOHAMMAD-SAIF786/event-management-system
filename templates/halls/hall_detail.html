@@ -1,0 +1,681 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+  Diamond Banquet|Royal Events
+{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/diamond_banquet.css' %}" />
+{% endblock %}
+
+{% block content %}
+  <!-- HERO -->
+
+  <section class="hall-hero" style="background-image:url('{{ hall.banner_image.url }}');">
+    <div class="hero-overlay">
+      {% if hall.show_badge %}
+        <span class="hall-badge">⭐ Premium Wedding Venue</span>
+      {% endif %}
+
+      <h1>{{ hall.name }}</h1>
+
+      <p>{{ hall.description }}</p>
+
+      <div class="hero-buttons">
+        <a href="#customize" class="btn-primary">Customize Event</a>
+
+        <a href="#gallery" class="btn-secondary">View Gallery</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- HALL INFO -->
+
+  <section class="hall-info">
+    <div class="section-title">
+      <h2>Venue Information</h2>
+      <p>Everything you need for a perfect event</p>
+    </div>
+
+    <div class="info-grid">
+      {% for feature in hall.features.all %}
+        <div class="info-card">
+          <i class="fa-solid {{ feature.icon }}"></i>
+          <h3>{{ feature.title }}</h3>
+          <p>{{ feature.subtitle }}</p>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+
+  <section id="gallery">
+    <div class="section-title">
+      <h2>Hall Gallery</h2>
+      <p>Explore our beautiful venue</p>
+    </div>
+
+    <div class="gallery-grid">
+      {% for image in hall.gallery.all %}
+        <img src="{{ image.hall_image.url }}" alt="{{ image.title }}" />
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- FURNITURE SECTION -->
+
+  <section id="customize" class="custom-section">
+    <div class="section-title">
+      <h2>Furniture & Seating</h2>
+      <p>Customize your seating arrangement</p>
+    </div>
+
+    {% for category in hall.furniture_categories.all %}
+      {% if category.items.all %}
+        <h3 class="category-title">{{ category.name }}</h3>
+
+        <div class="furniture-grid">
+          {% for item in category.items.all %}
+            <div class="furniture-card" data-id="{{ item.id }}" data-name="{{ item.name }}" data-price="{{ item.price }}">
+              <h3>
+                <i class="fa-solid {{ item.icon }}"></i>
+                {{ item.name }}
+              </h3>
+
+              <p>₹{{ item.price }} / {{ item.unit }}</p>
+
+              <div class="qty-box">
+                <button class="minus-btn" type="button" data-min="{{ item.min_quantity }}">-</button>
+
+                <span class="qty">{{ item.default_quantity }}</span>
+
+                <button class="plus-btn" type="button" data-max="{{ item.max_quantity }}">+</button>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endfor %}
+  </section>
+
+  <!-- STAGE DESIGN -->
+
+  {% for category in hall.stage_categories.all %}
+    <section class="stage-section">
+      <!-- Section Header -->
+      <div class="stage-header">
+        <h2>{{ category.name|upper }}</h2>
+        <div class="stage-navigation">
+          <div class="swiper-button-prev prev-{{ category.id }}"></div>
+          <div class="swiper-button-next next-{{ category.id }}"></div>
+        </div>
+      </div>
+      <!-- Yellow Line -->
+      <div class="stage-line"></div>
+      <!-- Swiper -->
+      <div class="swiper stageSwiper{{ category.id }}">
+        <div class="swiper-wrapper">
+          {% for stage in category.designs.all %}
+            <div class="swiper-slide">
+              <div class="stage-card">
+                <span class="new-badge">New!</span>
+                <img src="{{ stage.image.url }}" alt="{{ stage.name }}" />
+                <div class="stage-content">
+                  <h3>{{ stage.name }}</h3>
+                  {% if stage.description %}
+                    <p>{{ stage.description|truncatechars:60 }}</p>
+                  {% endif %}
+                  <div class="stage-price">₹{{ stage.price }}</div>
+                  <button class="stage-btn select-stage-btn" data-name="{{ stage.name }}" data-price="{{ stage.price }}" data-id="{{ stage.id }}">Select Stage</button>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+  {% endfor %}
+  {% for category in hall.service_categories.all %}
+    <section class="service-section">
+      <div class="section-title">
+        <h2>{{ category.name }}</h2>
+        <p>{{ category.subtitle }}</p>
+      </div>
+
+      <div class="extra-grid">
+        {% for service in category.services.all %}
+          <label class="extra-card">
+            <input type="checkbox" class="service-checkbox" data-name="{{ service.name }}" data-price="{{ service.price }}" data-category="{{ category.name }}" data-id="{{ service.id }}" />
+            <span>{{ service.name }}</span>
+            <small>₹{{ service.price }}</small>
+          </label>
+        {% endfor %}
+      </div>
+    </section>
+  {% endfor %}
+
+  <section class="summary-section">
+    <div class="summary-card">
+      <div class="summary-header">
+        <h2>Event Summary</h2>
+        <p>Your booking details</p>
+      </div>
+
+      <!-- Hall -->
+
+      <div class="summary-box active">
+        <div class="summary-title">
+          <div>🏛 Hall Booking</div>
+
+          <div class="accordion-right">
+            <strong>₹{{ hall.price }}</strong>
+
+            <i class="fa-solid fa-circle-check text-success"></i>
+          </div>
+        </div>
+
+        <div class="summary-body" style="display: block;">
+          <div class="summary-row">
+            <div class="summary-left">
+              <h4>{{ hall.name }}</h4>
+
+              <small>Hall Reserved Successfully</small>
+            </div>
+
+            <div class="summary-price">Confirmed ✅</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Furniture -->
+
+      <div class="summary-box">
+        <div class="summary-title accordion">
+          <div>🪑 Furniture & Seating</div>
+
+          <div class="accordion-right">
+            <strong id="furnitureTotal">₹0</strong>
+
+            <i class="fa-solid fa-chevron-down accordion-icon"></i>
+          </div>
+        </div>
+
+        <div class="summary-body">
+          <div id="furnitureSummary"></div>
+        </div>
+      </div>
+
+      <!-- Stage -->
+
+      <div class="summary-box">
+        <div class="summary-title accordion">
+          <div>🎭 Stage Decoration</div>
+
+          <div class="accordion-right">
+            <strong id="stageTotal">₹0</strong>
+
+            <i class="fa-solid fa-chevron-down accordion-icon"></i>
+          </div>
+        </div>
+
+        <div class="summary-body">
+          <div id="stageSummary"></div>
+        </div>
+      </div>
+
+      <!-- Additional services -->
+      <div class="summary-box">
+        <div class="summary-title accordion">
+          <div>🎉 Additional Services</div>
+
+          <div class="accordion-right">
+            <strong id="servicesTotal">₹0</strong>
+
+            <i class="fa-solid fa-chevron-down accordion-icon"></i>
+          </div>
+        </div>
+
+        <div class="summary-body">
+          <div id="servicesSummary"></div>
+        </div>
+      </div>
+
+      <!-- Grand Total -->
+
+      <div class="grand-total">
+        <span>Total Amount</span>
+
+        <strong id="grandTotal">₹0</strong>
+      </div>
+
+      <div class="summary-buttons">
+        <button type="button" class="summary-btn" onclick="goToRoom()">Select Rooms</button>
+
+        <a href="{% url 'catering' %}" class="summary-btn">Select Catering</a>
+
+        <button type="button" class="summary-btn final-btn" onclick="goToBookingOverview()">Continue Booking</button>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const bookingData = {
+      // Hall
+      hall: {
+        id: '{{ hall.id }}',
+        name: '{{ hall.name }}',
+        price: parseFloat('{{ hall.price }}')
+      },
+      furniture: [],
+      stage: null,
+      entertainment: [],
+      photography: [],
+      guestServices: [],
+      // Room
+      rooms: [],
+      roomTotal: 0,
+      // Catering
+      catering: null,
+      cateringTotal: 0,
+      // Customer
+      customer: {},
+      // Totals
+      furnitureTotal: 0,
+      grandTotal: 0
+    }
+    function updateFurniture() {
+      bookingData.furniture = []
+      bookingData.furnitureTotal = 0
+    
+      document.querySelectorAll('.furniture-card').forEach((card) => {
+        let qty = parseInt(card.querySelector('.qty').innerText)
+    
+        let price = parseFloat(card.dataset.price)
+    
+        let name = card.dataset.name
+    
+        console.log('Furniture ID =', card.dataset.id)
+        console.log(card)
+    
+        bookingData.furniture.push({
+          id: card.dataset.id,
+    
+          name: name,
+    
+          quantity: qty,
+    
+          price: price,
+    
+          total: qty * price
+        })
+      })
+      bookingData.furnitureTotal = 0
+    
+      bookingData.furniture.forEach((item) => {
+        bookingData.furnitureTotal += item.total
+      })
+      let html = ''
+    
+      bookingData.furniture.forEach((item) => {
+        html += `
+                        <div class="summary-row">
+        
+                            <div class="summary-left">
+        
+                                <h4>${item.name}</h4>
+        
+                                <small>
+                                    ${item.quantity} × ₹${item.price}
+                                </small>
+        
+                            </div>
+        
+                            <div class="summary-price">
+        
+                                ₹${item.total.toLocaleString('en-IN')}
+        
+                            </div>
+        
+                        </div>
+                    `
+      })
+    
+      document.getElementById('furnitureSummary').innerHTML = html
+    
+      document.getElementById('furnitureTotal').innerText = '₹' + bookingData.furnitureTotal.toLocaleString('en-IN')
+    
+      console.table(bookingData.furniture)
+    
+      console.log('Furniture Total =', bookingData.furnitureTotal)
+    
+      console.log(bookingData)
+    
+      updateGrandTotal()
+    }
+    
+    function updateStageSummary() {
+      if (bookingData.stage == null) {
+        document.getElementById('stageSummary').innerHTML = ''
+    
+        document.getElementById('stageTotal').innerText = '₹0'
+    
+        return
+      }
+    
+      document.getElementById('stageSummary').innerHTML = `
+        
+                    <div class="summary-row">
+        
+                        <div class="summary-left">
+        
+                            <h4>${bookingData.stage.name}</h4>
+        
+                            <small>
+                            Premium Stage Decoration
+                            </small>
+        
+                        </div>
+        
+                        <div class="summary-price">
+        
+                            ₹${bookingData.stage.price.toLocaleString('en-IN')}
+        
+                        </div>
+        
+                    </div>
+        
+                `
+    
+      document.getElementById('stageTotal').innerText = '₹' + bookingData.stage.price.toLocaleString('en-IN')
+    
+      updateGrandTotal()
+    }
+    
+    function updateServiceSummary() {
+      let total = 0
+      let groupedServices = {}
+      bookingData.entertainment = []
+      bookingData.photography = []
+      bookingData.guestServices = []
+    
+      document.querySelectorAll('.service-checkbox:checked').forEach((item) => {
+        let category = item.dataset.category
+    
+        if (!groupedServices[category]) {
+          groupedServices[category] = []
+        }
+    
+        let price = parseFloat(item.dataset.price)
+    
+        let serviceData = {
+          id: item.dataset.id,
+    
+          name: item.dataset.name,
+    
+          price: price
+        }
+    
+        if (category === 'DJ & Entertainment') {
+          bookingData.entertainment.push(serviceData)
+        } else if (category === 'Photography & Videography') {
+          bookingData.photography.push(serviceData)
+        } else {
+          bookingData.guestServices.push(serviceData)
+        }
+    
+        groupedServices[category].push({
+          name: item.dataset.name,
+          price: price
+        })
+    
+        total += price
+      })
+    
+      // Nothing Selected
+      if (Object.keys(groupedServices).length === 0) {
+        document.getElementById('servicesSummary').innerHTML = ''
+        document.getElementById('servicesTotal').innerText = '₹0'
+    
+        return
+      }
+    
+      let html = ''
+    
+      for (let category in groupedServices) {
+        html += `
+                <div class="summary-category">
+        
+                    <div class="summary-category-title">
+                        ${category}
+                    </div>
+                `
+    
+        groupedServices[category].forEach((service) => {
+          html += `
+                    <div class="summary-row">
+        
+                        <div class="summary-left">
+                            <h4>${service.name}</h4>
+                        </div>
+        
+                        <div class="summary-price">
+                            ₹${service.price.toLocaleString('en-IN')}
+                        </div>
+        
+                    </div>
+                    `
+        })
+    
+        html += `</div>`
+      }
+    
+      document.getElementById('servicesSummary').innerHTML = html
+    
+      document.getElementById('servicesTotal').innerText = '₹' + total.toLocaleString('en-IN')
+    
+      updateGrandTotal()
+    }
+    
+    document.querySelectorAll('.service-checkbox').forEach((item) => {
+      item.addEventListener('change', function () {
+        updateServiceSummary()
+        updateGrandTotal()
+      })
+    })
+    
+    function updateGrandTotal() {
+      let hallPrice = bookingData.hall ? bookingData.hall.price : 0
+    
+      let furniture = bookingData.furnitureTotal || 0
+    
+      let stage = bookingData.stage ? bookingData.stage.price : 0
+    
+      let services = 0
+    
+      document.querySelectorAll('.service-checkbox:checked').forEach((item) => {
+        services += parseFloat(item.dataset.price)
+      })
+    
+      let grandTotal = hallPrice + furniture + stage + services
+    
+      bookingData.grandTotal = grandTotal
+    
+      document.getElementById('grandTotal').innerText = '₹' + grandTotal.toLocaleString('en-IN')
+    }
+    
+    const plusButtons = document.querySelectorAll('.plus-btn')
+    plusButtons.forEach((button) => {
+      button.addEventListener('click', function () {
+        let qty = this.previousElementSibling
+    
+        let current = parseInt(qty.innerText)
+    
+        let max = parseInt(this.dataset.max)
+    
+        if (current < max) {
+          qty.innerText = current + 1
+    
+          updateFurniture()
+        }
+      })
+    })
+    
+    const minusButtons = document.querySelectorAll('.minus-btn')
+    minusButtons.forEach((button) => {
+      button.addEventListener('click', function () {
+        let qty = this.nextElementSibling
+    
+        let current = parseInt(qty.innerText)
+    
+        let min = parseInt(this.dataset.min)
+    
+        if (current > min) {
+          qty.innerText = current - 1
+    
+          updateFurniture()
+        }
+      })
+    })
+    
+    document.querySelectorAll('.select-stage-btn').forEach((btn) => {
+      btn.addEventListener('click', function () {
+        // remove previous selection
+        document.querySelectorAll('.stage-card').forEach((card) => {
+          card.classList.remove('active')
+        })
+    
+        document.querySelectorAll('.select-stage-btn').forEach((button) => {
+          button.classList.remove('selected')
+          button.innerText = 'Select Stage'
+        })
+    
+        // current selection
+        this.classList.add('selected')
+        this.innerText = 'Selected ✓'
+    
+        let card = this.closest('.stage-card')
+        card.classList.add('active')
+    
+        bookingData.stage = {
+          id: this.dataset.id,
+          name: this.dataset.name,
+          price: parseFloat(this.dataset.price)
+        }
+    
+        updateStageSummary()
+        console.log('Selected Stage =', bookingData.stage)
+    
+        console.log('Stage ID =', this.dataset.id)
+        console.log(this)
+    
+        console.log(bookingData)
+      })
+    })
+    
+    document.querySelectorAll('.accordion').forEach((item) => {
+      item.addEventListener('click', function () {
+        this.parentElement.classList.toggle('active')
+      })
+    })
+    
+    document.querySelectorAll('.service-checkbox').forEach((box) => {
+      box.addEventListener('change', function () {
+        updateServiceSummary()
+      })
+    })
+    
+    document.getElementById('continueBooking').addEventListener('click', function (e) {
+      e.preventDefault()
+    
+      fetch('/booking/create/', {
+        method: 'POST',
+    
+        headers: {
+          'Content-Type': 'application/json',
+    
+          'X-CSRFToken': '{{ csrf_token }}'
+        },
+    
+        body: JSON.stringify(bookingData)
+      })
+        .then((response) => response.json())
+    
+        .then((data) => {
+          console.log(data)
+    
+          if (data.status === 'success') {
+            window.location.href = data.redirect_url
+    
+            // Next page
+            // window.location.href = "/booking/" + data.booking_id + "/";
+          }
+        })
+    })
+    
+    updateFurniture()
+    updateStageSummary()
+    updateServiceSummary()
+    updateGrandTotal()
+    console.log('js loaded')
+    
+    function goToBookingOverview() {
+      console.log('Before Save')
+      console.log(bookingData)
+      console.log(bookingData.hall)
+    
+      sessionStorage.setItem('bookingData', JSON.stringify(bookingData))
+    
+      console.log(JSON.parse(sessionStorage.getItem('bookingData')))
+    
+      window.location.href = '/booking/overview/'
+    }
+    
+    function goToRoom() {
+      sessionStorage.setItem('bookingData', JSON.stringify(bookingData))
+    
+      console.log('Hall Data Saved:', bookingData)
+    
+      window.location.href = '/room/'
+    }
+  </script>
+{% endblock %}
+
+{% block extra_js %}
+  <script>
+    document.querySelectorAll('.swiper').forEach((swiper) => {
+      console.log('Class Name =', swiper.className)
+    
+      let match = swiper.className.match(/stageSwiper(\d+)/)
+    
+      console.log('Match =', match)
+    
+      if (!match) {
+        console.log('No Match Found')
+        return
+      }
+    
+      let id = match[1]
+    
+      console.log('Creating Swiper:', id)
+    
+      new Swiper(swiper, {
+        slidesPerView: 4,
+        spaceBetween: 25,
+    
+        navigation: {
+          nextEl: '.next-' + id,
+          prevEl: '.prev-' + id
+        },
+    
+        breakpoints: {
+          0: { slidesPerView: 1 },
+          768: { slidesPerView: 2 },
+          992: { slidesPerView: 3 },
+          1200: { slidesPerView: 4 }
+        }
+      })
+    })
+  </script>
+{% endblock %}

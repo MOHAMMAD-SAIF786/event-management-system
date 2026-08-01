@@ -1,0 +1,716 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Premium Package
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/menu.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- HERO -->
+
+<section class="premium-hero">
+    <div class="premium-overlay">
+
+        <span class="premium-badge">
+            ⭐ {{package.badge }}
+        </span>
+
+        <h1>{{ package.name }}</h1>
+
+        <p>
+            {{ package.description }}
+        </p>
+
+        <div class="hero-features">
+
+            {% for feature in package.bannar_features.all %}
+            <div>{{ feature.name }}</div>
+            {% endfor %}
+
+        </div>
+
+    </div>
+</section>
+
+<!-- GUEST PRICING -->
+
+<section class="guest-pricing">
+
+    <div class="section-title">
+        <h2>Guest Pricing</h2>
+        <p>Select package according to guest count</p>
+    </div>
+
+    <div class="pricing-grid">
+
+        {% for price in package.guest_pricing.all %}
+
+        {% comment %} <div class="price-card">
+            <h3>{{ price.guest_count }} Guests</h3>
+
+            <span>
+                ₹{{ price.price_per_plate }} / Plate
+            </span>
+        </div> {% endcomment %}
+
+        <div class="price-card" data-guest="{{ price.guest_count }}" data-price="{{ price.price_per_plate }}">
+
+            <h3>{{ price.guest_count }} Guests</h3>
+
+            <span>
+                ₹{{ price.price_per_plate }} / Plate
+            </span>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+<!-- BREAKFAST -->
+{% for section in sections %}
+<section class="food-section">
+
+    <div class="food-header">
+
+        <h2>{{ section.title }}</h2>
+        <div class="selection-info">
+            Available Items : {{ section.available_items }}
+            |
+            Select Maximum : {{ section.max_selection }}
+        </div>
+
+    </div>
+
+    <!-- ROTI -->
+    {% for category in section.categories.all %}
+    <div class="category-box">
+
+        <h3>{{ category.title }}</h3>
+        <div class="food-grid">
+            {% for item in category.items.all %}
+
+            <label>
+                <input type="checkbox" class="menu-checkbox" data-max="{{ section.max_selection }}"
+                    data-section="{{ section.title }}" data-item="{{ item.name }}" onchange="updateSelectedItems()">
+                {{ item.name }}
+            </label>
+
+            {% endfor %}
+        </div>
+
+    </div>
+    {% endfor %}
+
+    <div class="custom-section">
+
+        <input type="text" id="custom{{ section.id }}" placeholder="Add Custom Item">
+
+        <button type="button" onclick="addCustomItem(
+        'custom{{ section.id }}',
+        'customList{{ section.id }}'
+        )">
+            + Add
+        </button>
+
+    </div>
+
+    <div id="customList{{ section.id }}"></div>
+</section>
+{% endfor %}
+
+<!-- PACKAGE SUMMARY -->
+
+<section class="summary-section">
+
+    <div class="summary-card">
+
+        <div class="summary-header">
+
+            <h2>Catering Summary</h2>
+
+            <p>Your selected catering package</p>
+
+        </div>
+
+        <div class="summary-box active">
+
+            <div class="summary-title accordion">
+
+                <div>
+                    🍽 Catering Package
+                </div>
+
+                <div class="accordion-right">
+
+                    <strong id="packageTotal">
+                        ₹0
+                    </strong>
+
+                    <i class="fa-solid fa-chevron-down accordion-icon"></i>
+
+                </div>
+
+            </div>
+
+            <div class="summary-body" style="display:block;">
+
+                <div id="packageSummary"></div>
+
+            </div>
+
+        </div>
+
+        <div class="grand-total">
+
+            <span>Total Catering</span>
+
+            <strong id="grandCateringTotal">
+                ₹0
+            </strong>
+
+        </div>
+
+        <div class="summary-buttons">
+
+            <a href="{% url 'catering' %}" class="summary-btn">
+
+                Back To Packages
+
+            </a>
+
+            <button type="button" class="summary-btn final-btn" onclick="goToBookingOverview()">
+
+                Continue Booking
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+<script>
+
+    //==================================================
+    // BOOKING DATA
+    //==================================================
+
+    let bookingData = JSON.parse(
+        sessionStorage.getItem("bookingData")
+    );
+
+    if (!bookingData) {
+
+        bookingData = {
+
+            hall: null,
+
+            furniture: [],
+
+            stage: null,
+
+            entertainment: [],
+
+            photography: [],
+
+            guestServices: [],
+
+            rooms: [],
+
+            roomTotal: 0,
+
+            catering: null,
+
+            cateringTotal: 0,
+
+            customer: {},
+
+            furnitureTotal: 0,
+
+            grandTotal: 0
+
+        };
+
+    }
+
+    console.log("Booking Data Loaded");
+    console.log(bookingData);
+
+
+    //==================================================
+    // CATERING VARIABLES
+    //==================================================
+
+    let selectedGuestCount = 0;
+
+    let selectedPricePerPlate = 0;
+
+    let selectedTotalCost = 0;
+
+
+    //==================================================
+    // PAGE LOAD
+    //==================================================
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+        initGuestPricing();
+
+        initMenuSelection();
+
+        updateSelectedItems();
+
+    });
+
+
+    //==================================================
+    // GUEST PRICING
+    //==================================================
+
+    function initGuestPricing() {
+
+        const cards = document.querySelectorAll(".price-card");
+
+        cards.forEach(card => {
+
+            card.addEventListener("click", function () {
+
+                cards.forEach(c =>
+
+                    c.classList.remove("active")
+
+                );
+
+                this.classList.add("active");
+
+                selectedGuestCount =
+                    parseInt(this.dataset.guest);
+
+                selectedPricePerPlate =
+                    parseFloat(this.dataset.price);
+
+                selectedTotalCost =
+                    selectedGuestCount *
+                    selectedPricePerPlate;
+
+                if (!bookingData.catering) {
+
+                    bookingData.catering = {
+                        selectedItems: []
+                    };
+
+                }
+
+                bookingData.catering.id = "{{ package.id }}";
+                bookingData.catering.name = "{{ package.name }}";
+                bookingData.catering.guestCount = selectedGuestCount;
+                bookingData.catering.pricePerPlate = selectedPricePerPlate;
+                bookingData.catering.total = selectedTotalCost;
+
+                updateSelectedItems();
+                updatePackageSummary();
+
+                console.log("Guest Selected");
+
+                console.log(bookingData);
+
+            });
+
+        });
+
+    }
+
+
+    //==================================================
+    // MENU LIMIT VALIDATION
+    //==================================================
+
+    function initMenuSelection() {
+
+        document.querySelectorAll(".menu-checkbox")
+
+            .forEach(box => {
+
+                // Guest Count check
+                box.addEventListener("click", function (e) {
+
+                    if (selectedGuestCount === 0) {
+
+                        e.preventDefault();
+
+                        alert("⚠ Please select Guest Count first.");
+
+                        return;
+
+                    }
+
+                });
+
+                box.addEventListener("change", function () {
+
+                    let section = this.dataset.section;
+
+                    let max = parseInt(this.dataset.max);
+
+                    let checked = document.querySelectorAll(
+
+                        `.menu-checkbox[data-section="${section}"]:checked`
+
+                    );
+
+                    if (checked.length > max) {
+
+                        alert(`Maximum ${max} items allowed`);
+
+                        this.checked = false;
+
+                        return;
+
+                    }
+
+                    updateSelectedItems();
+
+                });
+
+            });
+
+    }
+
+
+    //==================================================
+    // CUSTOM ITEM
+    //==================================================
+
+    function addCustomItem(inputId, listId) {
+
+        if (selectedGuestCount === 0) {
+
+            alert("⚠ Please select Guest Count first.");
+
+            return;
+
+        }
+
+        let input =
+            document.getElementById(inputId);
+
+        let value =
+            input.value.trim();
+
+        if (value == "")
+            return;
+
+        let container =
+            document.getElementById(listId);
+
+        let div =
+            document.createElement("div");
+
+        div.className = "custom-item";
+
+        div.innerHTML = `
+
+        <label>
+
+            <input
+                type="checkbox"
+                   checked
+     class="custom-checkbox"
+     data-section="Custom Item"
+     data-item="${value}">
+
+     ⭐ ${value}
+
+     </label>
+
+     <button type="button">
+
+     Remove
+
+     </button>
+
+     `;
+
+        container.appendChild(div);
+
+        div.querySelector("button")
+
+            .addEventListener("click", function () {
+
+                div.remove();
+
+                updateSelectedItems();
+
+            });
+
+        div.querySelector(".custom-checkbox")
+
+            .addEventListener("change",
+
+                updateSelectedItems
+
+            );
+
+        input.value = "";
+
+        updateSelectedItems();
+
+    }
+
+    //==================================================
+    // UPDATE SUMMARY
+    //==================================================
+
+    function updateSelectedItems() {
+
+        console.log("updateSelectedItems Called");
+
+        let allItems = [];
+
+        document.querySelectorAll(
+            ".menu-checkbox:checked, .custom-checkbox:checked"
+        ).forEach(item => {
+
+            allItems.push({
+
+                section: item.dataset.section,
+
+                item: item.dataset.item
+
+            });
+
+        });
+
+        console.log("ALL ITEMS FOUND:", allItems);
+
+        if (!bookingData.catering) {
+
+            bookingData.catering = {};
+
+        }
+
+        bookingData.catering.selectedItems = allItems;
+
+        bookingData.catering.total = selectedTotalCost;
+
+        bookingData.cateringTotal = selectedTotalCost;
+
+        console.log("Saved Items:");
+        console.log(bookingData.catering.selectedItems);
+
+        updatePackageSummary();
+
+    }
+
+
+    //==================================================
+    // CONTINUE BOOKING
+    //==================================================
+
+    function goToBookingOverview() {
+
+        console.log("BEFORE CONTINUE");
+        console.log(bookingData.catering);
+        console.log("Selected Items:", bookingData.catering.selectedItems);
+
+        if (selectedGuestCount === 0) {
+
+            alert("Please select Guest Count.");
+
+            return;
+
+        }
+
+        if (
+            !bookingData.catering ||
+            bookingData.catering.selectedItems.length === 0
+        ) {
+
+            alert("Please select at least one menu item.");
+
+            return;
+
+        }
+        console.log("Before Save");
+        console.log(bookingData.catering);
+        console.log("After Save");
+        console.log(JSON.parse(sessionStorage.getItem("bookingData")).catering);
+
+        sessionStorage.setItem(
+
+            "bookingData",
+
+            JSON.stringify(bookingData)
+
+        );
+
+        console.log("Booking Saved");
+
+        console.log(bookingData);
+
+        window.location.href = "/booking/overview/";
+
+    }
+
+
+    //==================================================
+    // ADD TO CART
+    //==================================================
+
+    const cartForm =
+        document.getElementById("cartForm");
+
+    if (cartForm) {
+
+        cartForm.addEventListener(
+
+            "submit",
+
+            function (e) {
+
+                if (selectedGuestCount === 0) {
+
+                    e.preventDefault();
+
+                    alert("Please select Guest Pricing.");
+
+                    return;
+
+                }
+
+                if (
+                    !bookingData.catering ||
+                    bookingData.catering.selectedItems.length === 0
+                ) {
+
+                    e.preventDefault();
+
+                    alert("Please select menu items.");
+
+                    return;
+
+                }
+
+                document.getElementById("guestCountInput").value =
+                    bookingData.catering.guestCount;
+
+                document.getElementById("pricePerPlateInput").value =
+                    bookingData.catering.pricePerPlate;
+
+                document.getElementById("totalCostInput").value =
+                    bookingData.catering.total;
+
+                document.getElementById("selectedItemsInput").value =
+                    JSON.stringify(
+                        bookingData.catering.selectedItems
+                    );
+
+            }
+
+        );
+
+    }
+
+    function updatePackageSummary() {
+
+        if (!bookingData.catering) return;
+
+        const items = bookingData.catering.selectedItems || [];
+
+        let groupedItems = {};
+
+        // Group items by section
+        items.forEach(menu => {
+
+            if (!groupedItems[menu.section]) {
+
+                groupedItems[menu.section] = [];
+
+            }
+
+            groupedItems[menu.section].push(menu.item);
+
+        });
+
+        let itemsHTML = "";
+
+        for (let section in groupedItems) {
+
+            itemsHTML += `
+
+                <div class="menu-section">
+
+                    <h5>⬩➤${section}</h5>
+
+                    <ul>
+
+            `;
+
+            groupedItems[section].forEach(item => {
+
+                itemsHTML += `
+                     <li>${item}</li>
+                `;
+
+            });
+
+            itemsHTML += `
+
+                </ul>
+
+            </div>
+
+            `;
+
+        }
+
+        document.getElementById("packageSummary").innerHTML = `
+
+        <div class="summary-row">
+
+            <div class="summary-left">
+
+                <div class="summary-header-row">
+
+                    <h4>${bookingData.catering.name}</h4>
+
+                    <div class="summary-price catering-price">
+                        ₹${bookingData.catering.total.toLocaleString("en-IN")}
+                    </div>
+
+                </div>
+
+                <small>
+                    ${bookingData.catering.guestCount} Guests × ₹${bookingData.catering.pricePerPlate}/Plate
+                </small>
+
+                <br>
+
+                ${itemsHTML}
+
+            </div>
+
+        </div>
+
+        `;
+
+        document.getElementById("packageTotal").innerText =
+            "₹" + bookingData.catering.total.toLocaleString("en-IN");
+
+        document.getElementById("grandCateringTotal").innerText =
+            "₹" + bookingData.catering.total.toLocaleString("en-IN");
+
+    }
+
+</script>
+
+{% endblock %}

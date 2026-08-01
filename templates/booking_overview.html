@@ -1,0 +1,293 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Booking Overview
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/booking_overview.css' %}" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+{% endblock %}
+
+{% block content %}
+<section class="booking-overview">
+  <div class="container">
+    <!-- Header -->
+
+    <div class="booking-header">
+      <h1>Booking Overview</h1>
+
+      <p>Review your booking before confirming your event.</p>
+    </div>
+
+    <div class="booking-wrapper">
+      <!-- LEFT -->
+
+      <div class="booking-left">
+        <!-- Hall -->
+
+        <div class="booking-card" id="hallCard">
+          <div class="card-title">
+            <i class="fa-solid fa-building-columns"></i>
+
+            <h2>Hall Details</h2>
+          </div>
+
+          <div class="card-body" id="hallSection"></div>
+        </div>
+
+        <!-- Rooms -->
+
+        <div class="booking-card" id="roomCard">
+          <div class="card-title">
+            <i class="fa-solid fa-bed"></i>
+            <h2>Rooms</h2>
+          </div>
+
+
+          <div class="card-body" id="roomSection"></div>
+        </div>
+
+        <!-- catering  -->
+
+        <div class="booking-card" id="cateringCard">
+
+          <div class="card-title">
+            <i class="fa-solid fa-utensils"></i>
+            <h2>Catering</h2>
+          </div>
+
+          <div class="card-body" id="cateringSection"></div>
+
+        </div>
+
+        <!-- Furniture -->
+
+        <div class="booking-card" id="furnitureCard">
+          <div class="card-title">
+            <i class="fa-solid fa-couch"></i>
+
+            <h2>Furniture</h2>
+          </div>
+
+          <div class="card-body" id="furnitureSection"></div>
+        </div>
+
+        <!-- Stage -->
+
+        <div class="booking-card" id="stageCard">
+          <div class="card-title">
+            <i class="fa-solid fa-star"></i>
+
+            <h2>Stage Decoration</h2>
+          </div>
+
+          <div class="card-body" id="stageSection"></div>
+        </div>
+
+        <!-- Services -->
+
+        <div class="booking-card" id="serviceCard">
+          <div class="card-title">
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+
+            <h2>Additional Services</h2>
+          </div>
+
+          <div class="card-body" id="servicesSection"></div>
+        </div>
+
+
+        <!-- Customer Details -->
+
+        <div class="booking-card" >
+          <div class="card-title">
+            <i class="fa-solid fa-user"></i>
+
+            <h2>Customer Details</h2>
+          </div>
+
+          <div class="card-body">
+            <form id="bookingForm">
+              <div class="form-group">
+                <label>Full Name</label>
+
+                <input type="text" name="customer_name" id="customerName" placeholder="Enter Full Name" required />
+              </div>
+
+              <div class="form-group">
+                <label>Phone Number</label>
+
+                <input type="tel" name="customer_phone" id="customerPhone" pattern="[0-9]{10}" placeholder="96547XXXXX"
+                  maxlength="10" required />
+              </div>
+
+              <div class="form-group">
+                <label>Email Address</label>
+
+                <input type="email" name="customer_email" id="customerEmail" placeholder="example@gmail.com" required />
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Expected Guests</label>
+
+                  <input type="number" id="expectedGuests" placeholder="e.g. 250" min="1">
+                </div>
+
+                <div class="form-group">
+                  <label>Event Date</label>
+
+                  <input type="date" name="event_date" id="eventDate" />
+                </div>
+
+                <div class="form-group">
+                  <label>Event Time</label>
+
+                  <input type="time" name="event_time" id="eventTime" required>
+                </div>
+
+                <div class="form-group">
+                  <label>Event Type</label>
+
+                  <select name="event_type" id="eventType" required>
+
+                    <option value="">Select Event</option>
+
+                    <option value="Wedding">Wedding</option>
+
+                    <option value="Reception">Reception</option>
+
+                    <option value="Nikkah">Nikkah</option>
+
+                    <option value="Birthday">Birthday</option>
+
+                    <option value="Engagement">Engagement</option>
+
+                    <option value="Corporate">Corporate Event</option>
+
+                    <option value="Conference">Conference</option>
+
+                    <option value="Other">Other</option>
+
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+
+                <label>Special Request</label>
+
+                <textarea id="specialRequest" rows="4" placeholder="Write your special requirements   
+                   Example:
+
+               • Flower Decoration
+               • DJ Setup
+               • Jain Food
+               • Extra Parking
+               • Wheelchair Access"></textarea>
+
+              </div>
+
+              <div class="confirm-check">
+
+                <input type="checkbox" id="confirmBooking" required>
+
+                <label for="confirmBooking">
+
+                  ☑ I agree to the Terms & Conditions and confirm that all booking details are correct.
+
+                </label>
+
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT -->
+
+      <div class="booking-right">
+        <div class="summary-card">
+          <h2>
+            <i class="fa-solid fa-receipt"></i>
+
+            Booking Summary
+          </h2>
+
+          <div class="summary-list">
+            <!-- hall  -->
+            <div class="summary-item">
+              <span>Hall</span>
+
+              <strong id="summaryHallPrice">₹0</strong>
+            </div>
+
+            <!-- Rooms  -->
+            <div class="summary-item">
+              <span>Room</span>
+
+              <strong id="summaryRoomPrice">₹0</strong>
+            </div>
+
+            <!-- catering  -->
+            <div class="summary-item">
+              <span>Catering</span>
+              <strong id="summaryCateringPrice">₹0</strong>
+            </div>
+
+            <!-- furniture  -->
+            <div class="summary-item">
+              <span>Furniture</span>
+
+              <strong id="summaryFurniturePrice">₹0</strong>
+            </div>
+
+            <!-- stage -->
+            <div class="summary-item">
+              <span>Stage</span>
+
+              <strong id="summaryStagePrice">₹0</strong>
+            </div>
+
+            <!-- services  -->
+            <div class="summary-item">
+              <span>Services</span>
+
+              <strong id="summaryServicePrice">₹0</strong>
+            </div>
+          </div>
+
+          <div class="grand-total">
+            <span>Grand Total</span>
+
+            <h1 id="grandTotal">₹0</h1>
+          </div>
+
+          <div class="summary-buttons">
+            <button type="button" class="modify-btn" onclick="modifyBooking()">
+              <i class="fa-solid fa-pen"></i>
+              Modify Booking
+            </button>
+
+            <button type="button" class="confirm-btn" onclick="confirmBooking()">
+              <i class="fa-solid fa-circle-check"></i>
+              Confirm Booking
+            </button>
+          </div>
+        </div>
+      </div>
+      <h2>{{ booking.customer_name }}</h2>
+
+      <p>{{ booking.customer_phone }}</p>
+
+      <p>{{ booking.total_amount }}</p>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/booking_overview.js' %}"></script>
+{% endblock %}

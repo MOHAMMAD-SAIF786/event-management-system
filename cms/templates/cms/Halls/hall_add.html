@@ -1,0 +1,159 @@
+{% extends 'cms/base.html' %}
+{% load static %}
+
+{% block title %}
+Add Hall
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'cms/css/hall_edit.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="edit-page">
+
+    <div class="page-header">
+
+        <div>
+            <h1>Add New Hall</h1>
+            <p>Create a new hall</p>
+        </div>
+
+        <a href="{% url 'hall_list' %}" class="back-btn">
+            <i class="fa-solid fa-arrow-left"></i>
+            Back
+        </a>
+
+    </div>
+
+    <form method="POST" enctype="multipart/form-data">
+
+        {% csrf_token %}
+
+        <div class="glass-card">
+
+            <h2>Basic Information</h2>
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label>Hall Name</label>
+                    <input type="text" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Slug</label>
+                    <input type="text" name="slug" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Price</label>
+                    <input type="number" step="0.01" name="price" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Capacity</label>
+                    <input type="number" name="capacity" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Location</label>
+                    <input type="text" name="location">
+                </div>
+
+                <div class="form-group">
+                    <label>Parking Capacity</label>
+                    <input type="number" name="parking_capacity" value="0">
+                </div>
+
+            </div>
+
+            <div class="form-group full">
+
+                <label>Description</label>
+
+                <textarea name="description" rows="6"></textarea>
+
+            </div>
+
+        </div>
+
+        <div class="glass-card">
+
+            <h2>Images</h2>
+
+            <div class="image-grid">
+
+                <div>
+
+                    <label>Main Image</label>
+
+                    <input type="file" name="image" required>
+
+                </div>
+
+                <div>
+
+                    <label>Banner Image</label>
+
+                    <input type="file" name="banner_image">
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="glass-card">
+
+            <h2>Settings</h2>
+
+            <div class="checkbox-grid">
+
+                <label>
+                    <input type="checkbox" name="is_active" checked>
+                    Active
+                </label>
+
+                <label>
+                    <input type="checkbox" name="is_featured">
+                    Featured
+                </label>
+
+                <label>
+                    <input type="checkbox" name="is_ac" checked>
+                    AC Available
+                </label>
+
+                <label>
+                    <input type="checkbox" name="is_wifi" checked>
+                    WiFi Available
+                </label>
+
+                <label>
+                    <input type="checkbox" name="show_badge">
+                    Show Badge
+                </label>
+
+            </div>
+
+        </div>
+
+        <div class="submit-box">
+
+            <button type="submit" class="save-btn">
+
+                <i class="fa-solid fa-plus"></i>
+
+                Create Hall
+
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}

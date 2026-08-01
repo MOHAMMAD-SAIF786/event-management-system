@@ -1,0 +1,53 @@
+<div id="editFurnitureModal" class="modal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h2>Edit Furniture</h2>
+
+      <span onclick="closeFurnitureModal()">&times;</span>
+    </div>
+
+    <form id="editFurnitureForm" method="POST">
+      {% csrf_token %}
+
+      <input type="hidden" id="edit_id" />
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text" id="edit_name" name="name" />
+        </div>
+
+        <div class="form-group">
+          <label>Price</label>
+          <input type="number" step="0.01" id="edit_price" name="price" />
+        </div>
+
+        <div class="form-group">
+          <label>Unit</label>
+          <input type="text" id="edit_unit" name="unit" />
+        </div>
+
+        <div class="form-group">
+          <label>Default Qty</label>
+          <input type="number" id="edit_default" name="default_quantity" />
+        </div>
+
+        <div class="form-group">
+          <label>Min Qty</label>
+          <input type="number" id="edit_min" name="min_quantity" />
+        </div>
+
+        <div class="form-group">
+          <label>Max Qty</label>
+          <input type="number" id="edit_max" name="max_quantity" />
+        </div>
+
+        <div class="form-group">
+          <label><input type="checkbox" id="edit_required" name="is_required" />Required</label>
+        </div>
+      </div>
+
+      <button class="save-btn">Update Furniture</button>
+    </form>
+  </div>
+</div>

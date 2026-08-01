@@ -1,0 +1,120 @@
+{% extends 'cms/base.html' %}
+{% load static %}
+
+{% block title %}
+  Hall Management
+{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'cms/css/hall_list.css' %}" />
+{% endblock %}
+
+{% block content %}
+  <div class="page-header">
+    <div>
+      <h1>Hall Management</h1>
+
+      <p>Manage all event halls</p>
+    </div>
+
+    <div class="header-actions">
+
+      <a href="{% url 'cms:hall_add' %}" class="add-btn">
+        <i class="fa-solid fa-plus"></i>
+
+        Add Hall
+      </a>
+    </div>
+  </div>
+  <div class="glass-card">
+    <div class="table-header">
+      <div class="search-box">
+        <i class="fa-solid fa-magnifying-glass"></i>
+
+        <input type="text" id="searchInput" placeholder="Search Hall..." />
+      </div>
+    </div>
+
+    <div class="table-responsive">
+      <table class="hall-table">
+        <thead>
+          <tr>
+            <th>Image</th>
+
+            <th>Hall Name</th>
+
+            <th>Capacity</th>
+
+            <th>Price</th>
+
+            <th>Location</th>
+
+            <th>Featured</th>
+
+            <th>Status</th>
+
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {% for hall in halls %}
+            <tr>
+              <td>
+                {% if hall.image %}
+                  <img src="{{ hall.image.url }}" class="hall-img" />
+                {% else %}
+                  <img src="{% static 'cms/images/no-image.png' %}" class="hall-img" />
+                {% endif %}
+              </td>
+
+              <td>
+                <strong>{{ hall.name }}</strong>
+              </td>
+
+              <td>{{ hall.capacity }}</td>
+
+              <td>₹ {{ hall.price }}</td>
+
+              <td>{{ hall.location }}</td>
+
+              <td>
+                {% if hall.is_featured %}
+                  <span class="badge featured">
+                    <i class="fa-solid fa-star"></i>
+
+                    Featured
+                  </span>
+                {% else %}
+                  <span class="badge normal">Normal</span>
+                {% endif %}
+              </td>
+
+              <td>
+                {% if hall.is_active %}
+                  <span class="status active">Active</span>
+                {% else %}
+                  <span class="status inactive">Inactive</span>
+                {% endif %}
+              </td>
+
+              <td>
+                <div class="action-buttons">
+                  <a href="{% url 'cms:cms_hall_detail' hall.id %}" class="view-btn" title="View"><i class="fa-solid fa-eye"></i></a>
+
+                  {% comment %} <a href="{% url 'hall_edit' hall.id %}" class="edit-btn" title="Edit"><i class="fa-solid fa-pen"></i></a> {% endcomment %}
+
+                  {% comment %} <a href="{% url 'hall_delete' hall.id %}" class="delete-btn" onclick="return confirm('Delete this hall?')" title="Delete"><i class="fa-solid fa-trash"></i></a> {% endcomment %}
+                </div>
+              </td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td colspan="8" class="empty-row">No Hall Found.</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endblock %}

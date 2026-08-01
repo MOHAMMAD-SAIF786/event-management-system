@@ -1,0 +1,381 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Room | RoyalEvents
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/room.css' %}" />
+{% endblock %}
+
+{% block content %}
+<!-- HERO -->
+
+<section class="room-hero" style="background-image:url('{{ room_page.hero_image.url }}');">
+
+    <div class="hero-content">
+
+        <span class="room-badge">
+            Luxury Accommodation
+        </span>
+
+        <h1>{{ room_page.hero_title }}</h1>
+
+        <p>
+            {{ room_page.hero_subtitle }}
+        </p>
+
+    </div>
+
+</section>
+
+<!-- ROOM CARDS -->
+
+<section class="rooms-section">
+
+    <div class="section-title">
+        <h2>Choose Your Rooms</h2>
+        <p>Select rooms according to your requirements</p>
+    </div>
+
+    <div class="room-grid">
+        {% for room in rooms %}
+        <!-- BRIDE ROOM -->
+
+        <div class="room-card" data-price="{{ room.price }}" data-id="{{ room.id }}">
+
+            <img src="{{ room.image.url }}" alt="{{ room.name }}">
+
+            <div class="room-content">
+
+                <h3>👰 {{ room.name }}</h3>
+
+                <ul>
+                    {% for feature in room.features.all %}
+                    <li>{{ feature.name }}</li>
+                    {% endfor %}
+                </ul>
+
+                <div class="room-footer">
+
+                    <span class="price">
+                        ₹{{ room.price}}/Night
+                    </span>
+
+                    <div class="qty-box">
+                        <button class="minus">-</button>
+                        <span class="qty">0</span>
+                        <button class="plus">+</button>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+        {% endfor %}
+
+    </div>
+
+</section>
+
+<!-- SUMMARY -->
+
+<section class="summary-section">
+
+    <div class="summary-card">
+
+        <div class="summary-header">
+
+            <h2>Room Summary</h2>
+
+            <p>Your selected rooms</p>
+
+        </div>
+
+        <div class="summary-box active">
+
+            <div class="summary-title accordion">
+
+                <div>
+                    🛏 Room Booking
+                </div>
+
+                <div class="accordion-right">
+
+                    <strong id="roomTotal">
+                        ₹0
+                    </strong>
+
+                    <i class="fa-solid fa-chevron-down accordion-icon"></i>
+
+                </div>
+
+            </div>
+
+            <div class="summary-body">
+
+                <div id="roomSummary"></div>
+
+            </div>
+
+        </div>
+
+        <div class="grand-total">
+
+            <span>Total Amount</span>
+
+            <strong id="grandRoomTotal">
+                ₹0
+            </strong>
+
+        </div>
+
+        <div class="summary-buttons">
+
+            <a href="{% url 'catering' %}" class="summary-btn">
+                Select Catering
+            </a>
+
+            <button class="summary-btn final-btn" onclick="goToBookingOverview()">
+
+                Continue Booking
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+<script>
+    console.log("Room Page Loaded");
+    console.log(JSON.parse(sessionStorage.getItem("bookingData")));
+
+    let bookingData = JSON.parse(
+        sessionStorage.getItem("bookingData")
+    );
+
+    if (!bookingData) {
+
+        bookingData = {
+
+            hall: null,
+
+            furniture: [],
+
+            stage: null,
+
+            entertainment: [],
+
+            photography: [],
+
+            guestServices: [],
+
+            rooms: [],
+
+            roomTotal: 0,
+
+            catering: null,
+
+            cateringTotal: 0,
+
+            customer: {},
+
+            furnitureTotal: 0,
+
+            grandTotal: 0
+
+        };
+
+    }
+
+    console.log(bookingData);
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const cards = document.querySelectorAll(".room-card");
+
+        cards.forEach(card => {
+
+            const minusBtn = card.querySelector(".minus");
+            const plusBtn = card.querySelector(".plus");
+            const qtySpan = card.querySelector(".qty");
+
+            plusBtn.addEventListener("click", () => {
+
+                let qty = parseInt(qtySpan.innerText);
+                qtySpan.innerText = qty + 1;
+
+                updateSummary();
+            });
+
+            minusBtn.addEventListener("click", () => {
+
+                let qty = parseInt(qtySpan.innerText);
+
+                if (qty > 0) {
+                    qtySpan.innerText = qty - 1;
+                }
+
+                updateSummary();
+            });
+
+        });
+
+        updateSummary();
+
+    });
+
+    function updateSummary() {
+
+        let total = 0;
+        let summaryHTML = "";
+
+        // Reset
+        bookingData.rooms = [];
+
+        document.querySelectorAll(".room-card").forEach(card => {
+
+            let roomName = card.querySelector("h3").innerText;
+
+            let roomId = card.dataset.id;
+
+            let price = parseFloat(card.dataset.price);
+
+            let qty = parseInt(
+                card.querySelector(".qty").innerText
+            );
+
+            if (qty > 0) {
+
+                let roomTotal = qty * price;
+
+                total += roomTotal;
+
+                bookingData.rooms.push({
+
+                    id: roomId,
+
+                    name: roomName,
+
+                    quantity: qty,
+
+                    price: price,
+
+                    total: roomTotal
+
+                });
+
+                summaryHTML += `
+
+                <div class="summary-row">
+
+                    <div class="summary-left">
+
+                        <h4>${roomName}</h4>
+
+                        <small>
+
+                            ${qty} × ₹${price.toLocaleString("en-IN")}
+
+                        </small>
+
+                    </div>
+
+                    <div class="summary-price">
+
+                        ₹${roomTotal.toLocaleString("en-IN")}
+
+                    </div>
+
+                </div>
+
+            `;
+            }
+
+        });
+
+        bookingData.roomTotal = total;
+
+        if (total === 0) {
+
+            summaryHTML = `
+
+                <div class="summary-row">
+
+                    <div class="summary-left">
+
+                        <small>No rooms selected</small>
+
+                    </div>
+
+                </div>
+
+            `;
+        }
+
+        document.getElementById("roomSummary").innerHTML =
+            summaryHTML;
+
+        document.getElementById("roomTotal").innerText =
+            "₹" + total.toLocaleString("en-IN");
+
+        document.getElementById("grandRoomTotal").innerText =
+            "₹" + total.toLocaleString("en-IN");
+
+        console.table(bookingData.rooms);
+
+        console.log(bookingData);
+    }
+
+    document.querySelectorAll(".accordion").forEach(item => {
+
+        item.addEventListener("click", function () {
+
+            const box = this.closest(".summary-box");
+
+            box.classList.toggle("active");
+
+            const body = box.querySelector(".summary-body");
+
+            if (box.classList.contains("active")) {
+
+                body.style.display = "block";
+
+            } else {
+
+                body.style.display = "none";
+
+            }
+
+        });
+
+    });
+
+    function goToBookingOverview() {
+
+        console.log("Before Save");
+        console.log(bookingData);
+
+        console.log("Hall:", bookingData.hall);
+        console.log("Furniture:", bookingData.furniture);
+        console.log("Stage:", bookingData.stage);
+
+
+        // Latest room data save karo
+        sessionStorage.setItem(
+            "bookingData",
+            JSON.stringify(bookingData)
+        );
+
+        console.log("Booking Data Saved:", bookingData);
+
+        // Booking Overview page
+        window.location.href = "/booking/overview/";
+
+    }
+
+</script>
+{% endblock content %}

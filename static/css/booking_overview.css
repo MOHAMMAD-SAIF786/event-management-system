@@ -1,0 +1,817 @@
+/* ===========================
+   BOOKING OVERVIEW
+=========================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #f5f7fb;
+    font-family: 'Poppins', sans-serif;
+    color: #1f2937;
+}
+
+/* Container */
+
+.booking-overview {
+    padding: 60px 0;
+}
+
+.booking-overview .container {
+    width: 92%;
+    max-width: 1400px;
+    margin: auto;
+}
+
+/* Header */
+
+.booking-header {
+    text-align: center;
+    margin-bottom: 45px;
+}
+
+.booking-header h1 {
+    font-size: 42px;
+    font-weight: 700;
+    color: #1f2937;
+}
+
+.booking-header p {
+    margin-top: 12px;
+    color: #6b7280;
+    font-size: 17px;
+}
+
+/* Grid */
+
+.booking-wrapper {
+
+    display: grid;
+
+    grid-template-columns: 2fr 1fr;
+
+    gap: 35px;
+
+    align-items: start;
+
+}
+
+/* LEFT */
+
+.booking-left {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 28px;
+
+}
+
+/* RIGHT */
+
+.booking-right {
+
+    position: sticky;
+
+    top: 30px;
+
+}
+
+/* CARD */
+
+.booking-card {
+
+    background: #fff;
+
+    border-radius: 20px;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .06);
+
+    overflow: hidden;
+
+    transition: .35s;
+
+    border: 1px solid #ececec;
+
+}
+
+.booking-card:hover {
+
+    transform: translateY(-4px);
+
+    box-shadow: 0 18px 40px rgba(0, 0, 0, .12);
+
+}
+
+/* TITLE */
+
+.card-title {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    padding: 22px 28px;
+
+    background: #fafafa;
+
+    border-bottom: 1px solid #eee;
+
+}
+
+.card-title i {
+
+    width: 50px;
+
+    height: 50px;
+
+    background: #5b5ceb;
+
+    color: #fff;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    border-radius: 14px;
+
+    font-size: 20px;
+
+}
+
+.card-title h2 {
+
+    font-size: 22px;
+
+    font-weight: 700;
+
+    color: #1f2937;
+
+}
+
+/* BODY */
+
+.card-body {
+
+    padding: 28px;
+
+}
+
+/* Summary Row */
+
+.summary-row {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-start;
+
+    gap: 20px;
+
+    padding: 15px 0;
+
+    border-bottom: 1px dashed #e6e6e6;
+
+}
+
+.summary-row:last-child {
+
+    border: none;
+
+}
+
+.summary-left h4 {
+
+    font-size: 17px;
+
+    font-weight: 600;
+
+    color: #1f2937;
+
+}
+
+.summary-left small {
+
+    display: block;
+
+    margin-top: 5px;
+
+    color: #777;
+
+}
+
+.summary-price {
+    white-space: nowrap;
+    font-weight: 700;
+    color: #ff8c00;
+    font-size: 22px;
+
+}
+
+/* Category */
+
+.summary-category {
+
+    margin-bottom: 22px;
+
+}
+
+.summary-category-title {
+
+    margin-bottom: 15px;
+
+    font-size: 18px;
+
+    font-weight: 700;
+
+    color: #5b5ceb;
+
+}
+/* ======================================
+   catering 
+====================================== */
+.menu-section{
+
+    margin-top:18px;
+    padding-top:12px;
+    border-top:1px dashed #ddd;
+
+}
+
+.menu-section:first-child{
+
+    border-top:none;
+    padding-top:0;
+
+}
+
+.menu-section h5{
+
+    color:#d97706;
+    font-size:17px;
+    font-weight:700;
+    margin-bottom:10px;
+
+}
+
+.menu-section ul{
+
+    margin:0;
+    padding-left:25px;
+
+}
+
+.menu-section li{
+
+    margin-bottom:8px;
+    color:#555;
+    line-height:1.6;
+
+}
+.catering-price{
+    margin-top:5px;
+}
+
+/* ======================================
+   CUSTOMER FORM
+====================================== */
+
+.form-row {
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 20px;
+
+}
+
+.form-group {
+
+    margin-bottom: 22px;
+
+}
+
+.form-group label {
+
+    display: block;
+
+    margin-bottom: 10px;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    color: #374151;
+
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+
+    width: 100%;
+
+    padding: 15px 18px;
+
+    border: 1px solid #dcdcdc;
+
+    border-radius: 12px;
+
+    outline: none;
+
+    font-size: 15px;
+
+    transition: .3s;
+
+    background: #fff;
+
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+
+    border-color: #5B5CEB;
+
+    box-shadow: 0 0 0 4px rgba(91, 92, 235, .15);
+
+}
+
+/* ======================================
+   SUMMARY CARD
+====================================== */
+
+.summary-card {
+
+    background: #fff;
+
+    border-radius: 22px;
+
+    padding: 28px;
+
+    box-shadow: 0 15px 40px rgba(0, 0, 0, .08);
+
+    border: 1px solid #ececec;
+
+}
+
+.summary-card h2 {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    font-size: 24px;
+
+    margin-bottom: 30px;
+
+}
+
+.summary-card h2 i {
+
+    color: #5B5CEB;
+
+}
+
+.summary-list {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 18px;
+
+}
+
+.summary-item {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding-bottom: 16px;
+
+    border-bottom: 1px dashed #ddd;
+
+}
+
+.summary-item span {
+
+    color: #6b7280;
+
+    font-size: 16px;
+
+}
+
+.summary-item strong {
+
+    font-size: 18px;
+
+    color: #1f2937;
+
+}
+.summary-header-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:8px;
+}
+
+.summary-header-row h4{
+    margin:0;
+    font-size:22px;
+    font-weight:700;
+}
+
+/* ======================================
+   GRAND TOTAL
+====================================== */
+
+.grand-total {
+
+    margin-top: 35px;
+
+    padding: 25px;
+
+    border-radius: 18px;
+
+    background: linear-gradient(135deg, #5B5CEB, #7B7DFF);
+
+    color: #fff;
+
+    text-align: center;
+
+}
+
+.grand-total span {
+
+    display: block;
+
+    opacity: .9;
+
+    font-size: 16px;
+
+}
+
+.grand-total h1 {
+
+    margin-top: 10px;
+
+    font-size: 42px;
+
+    font-weight: 700;
+
+}
+
+/* ======================================
+   BUTTONS
+====================================== */
+
+.summary-buttons {
+
+    margin-top: 30px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 15px;
+
+}
+
+.summary-buttons button {
+
+    width: 100%;
+
+    padding: 16px;
+
+    border: none;
+
+    border-radius: 14px;
+
+    cursor: pointer;
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    transition: .3s;
+
+}
+
+.confirm-btn {
+
+    background: #5B5CEB;
+
+    color: #fff;
+
+}
+
+.confirm-btn:hover {
+
+    background: #4547d9;
+
+    transform: translateY(-3px);
+
+}
+
+.modify-btn {
+
+    background: #fff;
+
+    border: 2px solid #5B5CEB !important;
+
+    color: #5B5CEB;
+
+}
+
+.modify-btn:hover {
+
+    background: #5B5CEB;
+
+    color: #fff;
+
+}
+
+/* ======================================
+   CARD ANIMATION
+====================================== */
+
+.booking-card,
+.summary-card {
+
+    transition: all .35s ease;
+
+}
+
+.booking-card:hover {
+
+    transform: translateY(-6px);
+
+    box-shadow: 0 20px 45px rgba(0, 0, 0, .12);
+
+}
+
+.summary-card:hover {
+
+    transform: translateY(-4px);
+
+    box-shadow: 0 20px 50px rgba(91, 92, 235, .18);
+
+}
+
+/* ======================================
+   SCROLLBAR
+====================================== */
+
+::-webkit-scrollbar {
+
+    width: 10px;
+
+}
+
+::-webkit-scrollbar-track {
+
+    background: #f2f2f2;
+
+}
+
+::-webkit-scrollbar-thumb {
+
+    background: #5B5CEB;
+
+    border-radius: 20px;
+
+}
+
+::-webkit-scrollbar-thumb:hover {
+
+    background: #4547d9;
+
+}
+
+/* ======================================
+   INPUT PLACEHOLDER
+====================================== */
+
+::placeholder {
+
+    color: #a1a1aa;
+
+}
+
+/* ======================================
+   BUTTON RIPPLE
+====================================== */
+
+.summary-buttons button {
+
+    position: relative;
+
+    overflow: hidden;
+
+}
+
+.summary-buttons button::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 0;
+
+    height: 0;
+
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, .35);
+
+    top: 50%;
+
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    transition: .45s;
+
+}
+
+.summary-buttons button:active::after {
+
+    width: 350px;
+
+    height: 350px;
+
+}
+.confirm-check{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    margin:25px 0;
+
+}
+
+.confirm-check input{
+
+    width:18px;
+
+    height:18px;
+
+}
+
+.confirm-check label{
+
+    margin:0;
+
+    cursor:pointer;
+
+}
+
+/* ======================================
+   RESPONSIVE
+====================================== */
+
+@media(max-width:1200px) {
+
+    .booking-wrapper {
+
+        grid-template-columns: 1fr;
+
+    }
+
+    .booking-right {
+
+        position: relative;
+
+        top: 0;
+
+    }
+
+}
+
+@media(max-width:768px) {
+
+    .booking-overview {
+
+        padding: 35px 0;
+
+    }
+
+    .booking-header h1 {
+
+        font-size: 30px;
+
+    }
+
+    .booking-header p {
+
+        font-size: 15px;
+
+    }
+
+    .card-title {
+
+        padding: 18px;
+
+    }
+
+    .card-title h2 {
+
+        font-size: 20px;
+
+    }
+
+    .card-body {
+
+        padding: 18px;
+
+    }
+
+    .form-row {
+
+        grid-template-columns: 1fr;
+
+    }
+
+    .summary-card {
+
+        padding: 22px;
+
+    }
+
+    .grand-total h1 {
+
+        font-size: 34px;
+
+    }
+
+    .summary-buttons {
+
+        flex-direction: column;
+
+    }
+
+}
+
+
+@media(max-width:480px) {
+
+    .booking-header h1 {
+
+        font-size: 26px;
+
+    }
+
+    .summary-item {
+
+        font-size: 14px;
+
+    }
+
+    .summary-item strong {
+
+        font-size: 16px;
+
+    }
+
+    .summary-left h4 {
+
+        font-size: 15px;
+
+    }
+
+    .summary-price {
+
+        font-size: 16px;
+
+    }
+
+    .card-title i {
+
+        width: 42px;
+
+        height: 42px;
+
+        font-size: 16px;
+
+    }
+
+}

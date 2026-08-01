@@ -1,0 +1,470 @@
+{% extends 'cms/base.html' %}
+{% load static %}
+
+{% block title %}
+  catering package  Design Management
+{% endblock %}
+
+{% block extra_css %}
+<!-- Bootstrap 5 CSS & FontAwesome -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+<style>
+    .card {
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        border: 1px solid #e2e8f0;
+    }
+    .card-header h5 {
+        color: #ffffff !important;
+        font-weight: 600;
+    }
+    .badge-custom {
+        background-color: #f59e0b;
+        color: #fff;
+        font-size: 0.8rem;
+        padding: 4px 8px;
+        border-radius: 4px;
+    }
+    .btn-action-sm {
+        padding: 2px 6px;
+        font-size: 0.75rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+
+    <!-- Messages Display -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <!-- Top Header & Navigation -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold m-0"><i class="fas fa-utensils text-primary me-2"></i>Manage: {{ package.name }}</h2>
+            {% if package.badge %}
+                <span class="badge-custom mt-1 d-inline-block">{{ package.badge }}</span>
+            {% endif %}
+        </div>
+        <a href="{% url 'cms:catering_list' %}" class="btn btn-outline-secondary btn-sm">
+            <i class="fas fa-arrow-left me-1"></i> Back to Catering List
+        </a>
+    </div>
+
+    <!-- 1. BANNER & PACKAGE HIGHLIGHTS -->
+    <div class="card mb-4">
+        <div class="card-header bg-dark d-flex justify-content-between align-items-center">
+            <h5 class="m-0"><i class="fas fa-image me-2"></i>Banner & Package Basic Info</h5>
+        </div>
+        <div class="card-body">
+            <form method="POST" enctype="multipart/form-data" action="{% url 'cms:package_detail' package.id %}">
+                {% csrf_token %}
+                <input type="hidden" name="action_type" value="update_package_info">
+                
+                <div class="row g-3">
+                    <div class="col-md-3">
+                        <label class="form-label fw-bold">Package Banner Image</label>
+                        {% if package.image %}
+                            <img src="{{ package.image.url }}" class="img-thumbnail d-block mb-2 rounded" style="max-height: 120px; object-fit: cover;">
+                        {% endif %}
+                        <input type="file" name="image" class="form-control form-control-sm">
+                    </div>
+                    <div class="col-md-9">
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold">Package Name</label>
+                                <input type="text" name="name" value="{{ package.name }}" class="form-control" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold">Base Price (₹)</label>
+                                <input type="number" step="0.01" name="price" value="{{ package.price }}" class="form-control" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold">Badge / Tagline</label>
+                                <input type="text" name="badge" value="{{ package.badge }}" class="form-control" placeholder="e.g. Popular">
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label fw-bold">Description</label>
+                                <textarea name="description" class="form-control" rows="2">{{ package.description }}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-end mt-3">
+                    <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-save me-1"></i> Save Package Info</button>
+                </div>
+            </form>
+
+            <!-- Banner Features Section -->
+            <div class="mt-3 pt-3 border-top">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <label class="form-label fw-bold text-muted m-0"><i class="fas fa-tags me-1"></i> Banner Highlights (Tags)</label>
+                    <button class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#addBannerTagModal">
+                        <i class="fas fa-plus me-1"></i> Add Tag
+                    </button>
+                </div>
+                <div class="d-flex flex-wrap gap-2">
+                    {% for b_feat in package.bannar_features.all %}
+                        <span class="badge bg-info text-dark p-2 d-flex align-items-center gap-2">
+                            <i class="fas fa-star text-warning"></i>{{ b_feat.name }}
+                            <a href="?delete_banner_tag={{ b_feat.id }}" onclick="return confirm('Delete this tag?');" class="text-danger ms-1"><i class="fas fa-times"></i></a>
+                        </span>
+                    {% empty %}
+                        <span class="text-muted small">No banner tags added.</span>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. GUEST PRICING SLABS -->
+    <div class="card mb-4">
+        <div class="card-header bg-primary d-flex justify-content-between align-items-center">
+            <h5 class="m-0"><i class="fas fa-users me-2"></i>Guest Pricing Slabs</h5>
+            <button class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#addGuestPricingModal">
+                <i class="fas fa-plus me-1"></i> Add Pricing Slab
+            </button>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                {% for pricing in package.guest_pricing.all %}
+                    <div class="col-md-3 mb-3">
+                        <div class="p-3 border rounded bg-light text-center position-relative">
+                            <div class="position-absolute top-0 end-0 p-2">
+                                <a href="#" class="text-warning me-2" data-bs-toggle="modal" data-bs-target="#editGuestPricingModal{{ pricing.id }}"><i class="fas fa-pen"></i></a>
+                                <a href="?delete_pricing={{ pricing.id }}" onclick="return confirm('Delete pricing slab?');" class="text-danger"><i class="fas fa-trash"></i></a>
+                            </div>
+                            <h6 class="fw-bold text-dark mt-2">{{ pricing.guest_count }} Guests</h6>
+                            <h5 class="text-success fw-bold">₹{{ pricing.price_per_plate }} <span class="fs-6 text-muted">/ plate</span></h5>
+                        </div>
+                    </div>
+
+                    <!-- Modal: Edit Pricing -->
+                    <div class="modal fade" id="editGuestPricingModal{{ pricing.id }}" tabindex="-1">
+                        <div class="modal-dialog">
+                            <form method="POST" action="{% url 'cms:package_detail' package.id %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="action_type" value="edit_guest_pricing">
+                                <input type="hidden" name="pricing_id" value="{{ pricing.id }}">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Edit Pricing Slab</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="mb-3">
+                                            <label class="form-label fw-bold">Guest Count</label>
+                                            <input type="number" name="guest_count" value="{{ pricing.guest_count }}" class="form-control" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label fw-bold">Price Per Plate (₹)</label>
+                                            <input type="number" step="0.01" name="price_per_plate" value="{{ pricing.price_per_plate }}" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                {% empty %}
+                    <div class="col-12 text-muted"><i class="fas fa-info-circle me-1"></i> No guest pricing slabs configured.</div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. MENU BUILDER (SECTIONS -> CATEGORIES -> ITEMS) -->
+    <div class="card mb-4">
+        <div class="card-header bg-success d-flex justify-content-between align-items-center">
+            <h5 class="m-0"><i class="fas fa-list-check me-2"></i>Package Menu Builder</h5>
+            <button class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#addSectionModal">
+                <i class="fas fa-plus me-1"></i> Add Menu Section
+            </button>
+        </div>
+        <div class="card-body">
+            {% for section in package.sections.all %}
+                <div class="border rounded p-3 mb-4 bg-light">
+                    <!-- Section Header -->
+                    <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-3">
+                        <div>
+                            <h4 class="fw-bold text-dark d-inline me-2">{{ section.title }}</h4>
+                            <span class="badge bg-secondary me-1">Available: {{ section.available_items }}</span>
+                            <span class="badge bg-warning text-dark">Select Max: {{ section.max_selection }}</span>
+                        </div>
+                        <div>
+                            <button class="btn btn-outline-success btn-sm me-1" data-bs-toggle="modal" data-bs-target="#addCategoryModal{{ section.id }}">
+                                <i class="fas fa-plus"></i> Add Category
+                            </button>
+                            <button class="btn btn-outline-primary btn-sm me-1" data-bs-toggle="modal" data-bs-target="#editSectionModal{{ section.id }}">
+                                <i class="fas fa-pen"></i>
+                            </button>
+                            <a href="?delete_section={{ section.id }}" onclick="return confirm('Delete section and all its contents?');" class="btn btn-outline-danger btn-sm">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Loop Categories inside Section -->
+                    {% for category in section.categories.all %}
+                        <div class="ms-2 mb-3 border-start border-3 border-primary ps-3">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <h6 class="fw-bold text-primary m-0">{{ category.title }}</h6>
+                                <div>
+                                    <button class="btn btn-action-sm btn-outline-success me-1" data-bs-toggle="modal" data-bs-target="#addItemModal{{ category.id }}">
+                                        + Item
+                                    </button>
+                                    <button class="btn btn-action-sm btn-outline-primary me-1" data-bs-toggle="modal" data-bs-target="#editCategoryModal{{ category.id }}">
+                                        <i class="fas fa-pen"></i>
+                                    </button>
+                                    <a href="?delete_category={{ category.id }}" onclick="return confirm('Delete category?');" class="btn btn-action-sm btn-outline-danger">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- Items Checklist -->
+                            <div class="row g-2">
+                                {% for item in category.items.all %}
+                                    <div class="col-md-3 col-sm-6">
+                                        <div class="p-2 border rounded bg-white d-flex align-items-center justify-content-between">
+                                            <span class="fw-medium text-dark">{{ item.name }}</span>
+                                            <div>
+                                                <a href="?delete_item={{ item.id }}" onclick="return confirm('Delete item?');" class="text-danger small"><i class="fas fa-times"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% empty %}
+                                    <div class="text-muted small">No items added in this category yet.</div>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <!-- Modal: Add Item -->
+                        <div class="modal fade" id="addItemModal{{ category.id }}" tabindex="-1">
+                            <div class="modal-dialog">
+                                <form method="POST" action="{% url 'cms:package_detail' package.id %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="action_type" value="add_item">
+                                    <input type="hidden" name="category_id" value="{{ category.id }}">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Add New Item</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="mb-3">
+                                                <label class="form-label fw-bold">Item Name</label>
+                                                <input type="text" name="item_name" class="form-control" required placeholder="e.g. Paneer Butter Masala">
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-success">Add Item</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Modal: Edit Category -->
+                        <div class="modal fade" id="editCategoryModal{{ category.id }}" tabindex="-1">
+                            <div class="modal-dialog">
+                                <form method="POST" action="{% url 'cms:package_detail' package.id %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="action_type" value="edit_category">
+                                    <input type="hidden" name="category_id" value="{{ category.id }}">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Edit Category</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="mb-3">
+                                                <label class="form-label fw-bold">Category Title</label>
+                                                <input type="text" name="category_title" value="{{ category.title }}" class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary">Save Category</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                    {% empty %}
+                        <div class="text-muted">No categories under this menu section.</div>
+                    {% endfor %}
+                </div>
+
+                <!-- Modal: Add Category -->
+                <div class="modal fade" id="addCategoryModal{{ section.id }}" tabindex="-1">
+                    <div class="modal-dialog">
+                        <form method="POST" action="{% url 'cms:package_detail' package.id %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="action_type" value="add_category">
+                            <input type="hidden" name="section_id" value="{{ section.id }}">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Add Category to {{ section.title }}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold">Category Title</label>
+                                        <input type="text" name="category_title" class="form-control" placeholder="e.g. Starter Dishes" required>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-success">Add Category</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Modal: Edit Section -->
+                <div class="modal fade" id="editSectionModal{{ section.id }}" tabindex="-1">
+                    <div class="modal-dialog">
+                        <form method="POST" action="{% url 'cms:package_detail' package.id %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="action_type" value="edit_section">
+                            <input type="hidden" name="section_id" value="{{ section.id }}">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Edit Section</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold">Section Title</label>
+                                        <input type="text" name="section_title" value="{{ section.title }}" class="form-control" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold">Available Items Count</label>
+                                        <input type="number" name="available_items" value="{{ section.available_items }}" class="form-control">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold">Max Selection</label>
+                                        <input type="number" name="max_selection" value="{{ section.max_selection }}" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            {% empty %}
+                <div class="text-muted p-2"><i class="fas fa-exclamation-triangle me-1"></i> No menu sections added to this package yet.</div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<!-- ================= MODALS: ADD GENERAL ITEMS ================= -->
+
+<!-- Modal: Add Banner Tag -->
+<div class="modal fade" id="addBannerTagModal" tabindex="-1">
+    <div class="modal-dialog">
+        <form method="POST" action="{% url 'cms:package_detail' package.id %}">
+            {% csrf_token %}
+            <input type="hidden" name="action_type" value="add_banner_tag">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Banner Highlight Tag</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Tag Name</label>
+                        <input type="text" name="tag_name" class="form-control" placeholder="e.g. Free Welcome Drinks" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Add Tag</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal: Add Guest Pricing -->
+<div class="modal fade" id="addGuestPricingModal" tabindex="-1">
+    <div class="modal-dialog">
+        <form method="POST" action="{% url 'cms:package_detail' package.id %}">
+            {% csrf_token %}
+            <input type="hidden" name="action_type" value="add_guest_pricing">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Guest Pricing Slab</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Guest Count</label>
+                        <input type="number" name="guest_count" class="form-control" placeholder="e.g. 500" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Price Per Plate (₹)</label>
+                        <input type="number" step="0.01" name="price_per_plate" class="form-control" placeholder="e.g. 450.00" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Add Pricing Slab</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal: Add Section -->
+<div class="modal fade" id="addSectionModal" tabindex="-1">
+    <div class="modal-dialog">
+        <form method="POST" action="{% url 'cms:package_detail' package.id %}">
+            {% csrf_token %}
+            <input type="hidden" name="action_type" value="add_section">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add New Menu Section</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Section Title</label>
+                        <input type="text" name="section_title" class="form-control" placeholder="e.g. Main Course" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Available Items Count</label>
+                        <input type="number" name="available_items" value="0" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Max Selection Allowed</label>
+                        <input type="number" name="max_selection" value="0" class="form-control">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Add Section</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Bootstrap JS Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+{% endblock %}

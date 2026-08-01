@@ -1,0 +1,90 @@
+<aside class="sidebar">
+  <div class="logo">
+    <h2>Royal<span>CMS</span></h2>
+  </div>
+
+  <ul class="menu">
+    <li class="{% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
+      <a href="{% url 'cms:dashboard' %}">
+        <i class="fa-solid fa-gauge-high"></i>
+        <span>Dashboard</span>
+      </a>
+    </li>
+
+    <li class="{% if request.resolver_match.url_name == 'booking_list' or request.resolver_match.url_name == 'booking_detail' %}active{% endif %}">
+      <a href="{% url 'cms:booking_list' %}">
+        <i class="fa-solid fa-calendar-check"></i>
+        <span>Bookings</span>
+      </a>
+    </li>
+
+    <li class="{% if request.resolver_match.url_name == 'customer_list' or request.resolver_match.url_name == 'customer_detail' or request.resolver_match.url_name == 'customer_edit' %}active{% endif %}">
+      <a href="{% url 'cms:customer_list' %}">
+        <i class="fa-solid fa-users"></i>
+
+        <span>Customers</span>
+      </a>
+    </li>
+
+    <li class="{% if request.resolver_match.url_name == 'hall_list' or request.resolver_match.url_name == 'cms_hall_detail' or request.resolver_match.url_name == 'hall_add' or request.resolver_match.url_name == 'hall_edit' %}active{% endif %}">
+      <a href="{% url 'cms:hall_list' %}">
+        <i class="fa-solid fa-building"></i>
+        <span>Halls</span>
+      </a>
+    </li>
+
+    <li class="{% if 'room' in request.path %}active{% endif %}">
+      <a href="{% url 'cms:room_list' %}">
+        <i class="fa-solid fa-bed"></i>
+
+        <span>Rooms</span>
+      </a>
+    </li>
+
+    <li class="{% if request.resolver_match.url_name == 'furniture_list' or request.resolver_match.url_name == 'furniture_add' %}active{% endif %}">
+      <a href="{% url 'cms:furniture_list' %}">
+        <i class="fa-solid fa-chair"></i>
+        <span>Furniture</span>
+      </a>
+    </li>
+
+    <li class="{% if request.resolver_match.url_name == 'stage_design_list' or request.resolver_match.url_name == 'stage_design_add' or request.resolver_match.url_name == 'stage_design_edit' %}active{% endif %}">
+      <a href="{% url 'cms:stage_design_list' %}">
+        <i class="fa-solid fa-mountain-city"></i>
+        <span>Stage Design</span>
+      </a>
+    </li>
+
+    <!-- SERVICES NAVIGATION LINK -->
+    <li class="{% if '/service' in request.path %}active{% endif %}">
+      <a href="{% url 'cms:service_list' %}">
+        <i class="fa-solid fa-concierge-bell"></i>
+        <span>Services</span>
+      </a>
+    </li>
+
+    <li class="{% if 'catering' in request.path %}active{% endif %}">
+      <a href="{% url 'cms:catering_list' %}">
+        <i class="fa-solid fa-utensils"></i>
+
+        <span>Catering</span>
+      </a>
+    </li>
+
+    <li class="{% if 'gallery' in request.path %}active{% endif %}">
+      <a href="{% url 'cms:gallery_dashboard' %}">
+        <i class="fa-solid fa-images"></i>
+        <span>Gallery Manager</span>
+      </a>
+    </li>
+    
+  </ul>
+
+  <div class="logout">
+    <a href="{% url 'cms:admin_logout' %}">
+      <i class="fa-solid fa-right-from-bracket"></i>
+
+      Logout
+    </a>
+  </div>
+</aside>

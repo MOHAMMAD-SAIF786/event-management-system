@@ -1,0 +1,297 @@
+/* ==========================================
+                SIDEBAR
+========================================== */
+
+.sidebar{
+
+    width:270px;
+
+    height:100vh;
+
+    background:#0f172a;
+
+    position:fixed;
+
+    top:0;
+
+    left:0;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:space-between;
+
+    transition:.35s;
+
+    z-index:999;
+
+    overflow-y:auto;
+    
+    overflow-x:hidden;
+
+}
+
+/* Collapse */
+
+.sidebar.collapsed{
+
+    width:90px;
+
+}
+
+/* ==========================================
+                LOGO
+========================================== */
+
+.logo{
+
+    height:80px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    border-bottom:1px solid rgba(255,255,255,.08);
+
+}
+
+.logo h2{
+
+    color:#fff;
+
+    font-size:26px;
+
+    font-weight:700;
+
+    transition:.3s;
+
+}
+
+.logo span{
+
+    color:#3b82f6;
+
+}
+
+/* Hide Logo Text */
+
+.sidebar.collapsed .logo h2{
+
+    font-size:0;
+
+}
+
+.sidebar.collapsed .logo h2::before{
+
+    content:"R";
+
+    font-size:30px;
+
+    color:#3b82f6;
+
+}
+
+/* ==========================================
+                MENU
+========================================== */
+
+.menu{
+
+    list-style:none;
+
+    padding:20px 15px;
+
+    flex:1;
+
+}
+
+.menu li{
+
+    margin-bottom:8px;
+
+}
+
+.menu li a{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:16px;
+
+    padding:15px 18px;
+
+    border-radius:14px;
+
+    color:#cbd5e1;
+
+    text-decoration:none;
+
+    transition:.3s;
+
+    font-size:15px;
+
+    font-weight:500;
+
+}
+
+.menu li a i{
+
+    width:22px;
+
+    text-align:center;
+
+    font-size:18px;
+
+}
+
+/* Hover */
+
+.menu li a:hover{
+
+    background:#2563eb;
+
+    color:#fff;
+
+    transform:translateX(5px);
+
+}
+
+/* Active */
+
+.menu li.active a{
+
+    background:#2563eb;
+
+    color:#fff;
+
+}
+
+/* ==========================================
+            COLLAPSE TEXT
+========================================== */
+
+.sidebar.collapsed .menu li a{
+
+    justify-content:center;
+
+}
+
+.sidebar.collapsed .menu li a span{
+
+    display:none;
+
+}
+
+.sidebar.collapsed .menu li a{
+
+    gap:0;
+
+}
+
+/* ==========================================
+                LOGOUT
+========================================== */
+
+.logout{
+
+    padding:20px 15px;
+
+    border-top:1px solid rgba(255,255,255,.08);
+
+}
+
+.logout a{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:16px;
+
+    padding:15px 18px;
+
+    border-radius:14px;
+
+    color:#ef4444;
+
+    text-decoration:none;
+
+    transition:.3s;
+
+    font-weight:600;
+
+}
+
+.logout a:hover{
+
+    background:#ef4444;
+
+    color:#fff;
+
+}
+
+.sidebar.collapsed .logout a{
+
+    justify-content:center;
+
+}
+
+.sidebar.collapsed .logout span{
+
+    display:none;
+
+}
+
+/* ==========================================
+            MAIN CONTENT
+========================================== */
+
+.main-content{
+
+    margin-left:270px;
+
+    padding:25px;
+
+    min-height:100vh;
+
+    transition:.35s;
+
+    background:#f1f5f9;
+
+}
+
+.sidebar.collapsed ~ .main-content{
+
+    margin-left:90px;
+
+}
+
+/* ==========================================
+            RESPONSIVE
+========================================== */
+
+@media(max-width:768px){
+
+    .sidebar{
+
+        transform:translateX(-100%);
+
+    }
+
+    .sidebar.active{
+
+        transform:translateX(0);
+
+    }
+
+    .main-content{
+
+        margin-left:0;
+
+    }
+
+}

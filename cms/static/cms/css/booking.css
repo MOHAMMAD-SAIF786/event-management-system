@@ -1,0 +1,610 @@
+/* ==========================================
+            BOOKING PAGE
+========================================== */
+
+.booking-container {
+
+    padding: 30px;
+
+}
+
+/* ==========================================
+            HEADER
+========================================== */
+
+.booking-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 30px;
+
+    flex-wrap: wrap;
+
+    gap: 20px;
+
+}
+
+.booking-header h1 {
+
+    font-size: 32px;
+
+    color: #0f172a;
+
+    font-weight: 700;
+
+}
+
+.booking-header p {
+
+    margin-top: 8px;
+
+    color: #64748b;
+
+}
+
+.btn-primary {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 14px 22px;
+
+    background: #2563eb;
+
+    color: #fff;
+
+    border-radius: 14px;
+
+    text-decoration: none;
+
+    font-weight: 600;
+
+    transition: .3s;
+
+}
+
+.btn-primary:hover {
+
+    background: #1d4ed8;
+
+    transform: translateY(-3px);
+
+}
+
+/* ==========================================
+            FILTER
+========================================== */
+
+.booking-filter {
+
+    background: #fff;
+
+    padding: 20px;
+
+    border-radius: 18px;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .05);
+
+    margin-bottom: 25px;
+
+}
+
+.booking-filter form {
+
+    display: flex;
+
+    gap: 15px;
+
+    flex-wrap: wrap;
+
+}
+
+.search-box {
+
+    flex: 1;
+
+    min-width: 280px;
+
+    height: 50px;
+
+    border: 1px solid #dbe3ec;
+
+    border-radius: 14px;
+
+    display: flex;
+
+    align-items: center;
+
+    padding: 0 18px;
+
+}
+
+.search-box i {
+
+    color: #94a3b8;
+
+}
+
+.search-box input {
+
+    flex: 1;
+
+    border: none;
+
+    outline: none;
+
+    margin-left: 12px;
+
+    background: transparent;
+
+    font-size: 14px;
+
+}
+
+.booking-filter select {
+
+    height: 50px;
+
+    border: 1px solid #dbe3ec;
+
+    border-radius: 14px;
+
+    padding: 0 18px;
+
+    outline: none;
+
+    min-width: 180px;
+
+}
+
+.booking-filter button {
+
+    height: 50px;
+
+    padding: 0 22px;
+
+    border: none;
+
+    background: #2563eb;
+
+    color: #fff;
+
+    border-radius: 14px;
+
+    cursor: pointer;
+
+    font-weight: 600;
+
+    transition: .3s;
+
+}
+
+.booking-filter button:hover {
+
+    background: #1d4ed8;
+
+}
+
+/* ==========================================
+            TABLE
+========================================== */
+
+.booking-table-wrapper {
+
+    background: #fff;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .05);
+
+}
+
+.booking-table {
+
+    width: 100%;
+
+    border-collapse: collapse;
+
+}
+
+.booking-table thead {
+
+    background: #f8fafc;
+
+}
+
+.booking-table thead th {
+
+    padding: 18px;
+
+    text-align: left;
+
+    font-size: 14px;
+
+    color: #64748b;
+
+    font-weight: 600;
+
+}
+
+.booking-table tbody td {
+
+    padding: 18px;
+
+    border-top: 1px solid #edf2f7;
+
+    color: #334155;
+
+    font-size: 14px;
+
+}
+
+.booking-table tbody tr {
+
+    transition: .3s;
+
+}
+
+.booking-table tbody tr:hover {
+
+    background: #f8fbff;
+
+}
+
+
+/* ==========================================
+            STATUS BADGES
+========================================== */
+
+.status {
+
+    padding: 7px 14px;
+
+    border-radius: 30px;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    color: #fff;
+
+    display: inline-block;
+
+}
+
+.status.confirmed {
+
+    background: #10b981;
+
+}
+
+.status.pending {
+
+    background: #f59e0b;
+
+}
+
+.status.cancelled {
+
+    background: #ef4444;
+
+}
+
+.status.draft {
+
+    background: #dbeafe;
+
+    color: #1d4ed8;
+
+}
+
+
+/* ==========================================
+            ACTION BUTTON
+========================================== */
+
+.table-btn {
+
+    width: 40px;
+
+    height: 40px;
+
+    display: inline-flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    border-radius: 12px;
+
+    background: #2563eb;
+
+    color: #fff;
+
+    text-decoration: none;
+
+    transition: .3s;
+
+}
+
+.table-btn:hover {
+
+    background: #1d4ed8;
+
+    transform: translateY(-3px);
+
+}
+
+
+/* ==========================================
+            EMPTY DATA
+========================================== */
+
+.empty {
+
+    text-align: center;
+
+    padding: 50px !important;
+
+    color: #94a3b8;
+
+    font-size: 15px;
+
+}
+
+/* ==========================================
+            PAGINATION
+========================================== */
+
+.pagination {
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-top: 30px;
+
+}
+
+.pagination a {
+
+    width: 42px;
+
+    height: 42px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    border-radius: 12px;
+
+    background: #ffffff;
+
+    color: #334155;
+
+    text-decoration: none;
+
+    box-shadow: 0 5px 15px rgba(0, 0, 0, .05);
+
+    transition: .3s;
+
+}
+
+.pagination a:hover {
+
+    background: #2563eb;
+
+    color: #fff;
+
+}
+
+.pagination .active {
+
+    background: #2563eb;
+
+    color: #fff;
+
+}
+
+/* ==========================================
+            TABLE SCROLL
+========================================== */
+
+.booking-table-wrapper {
+
+    overflow-x: auto;
+
+}
+
+.booking-table {
+
+    min-width: 950px;
+
+}
+
+.action-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.action-buttons a {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: #fff;
+    transition: .3s;
+}
+
+.view-btn {
+    background: #4f46e5;
+}
+
+.edit-btn {
+    background: #10b981;
+}
+
+.delete-btn {
+    background: #ef4444;
+}
+
+.action-buttons a:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, .15);
+}
+
+/* ==========================================
+            RESPONSIVE
+========================================== */
+
+@media(max-width:992px) {
+
+    .booking-header {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+    }
+
+    .btn-primary {
+
+        width: 100%;
+
+        justify-content: center;
+
+    }
+
+}
+
+@media(max-width:768px) {
+
+    .booking-container {
+
+        padding: 20px;
+
+    }
+
+    .booking-filter form {
+
+        flex-direction: column;
+
+    }
+
+    .search-box {
+
+        width: 100%;
+
+        min-width: 100%;
+
+    }
+
+    .booking-filter select {
+
+        width: 100%;
+
+    }
+
+    .booking-filter button {
+
+        width: 100%;
+
+    }
+
+}
+
+@media(max-width:576px) {
+
+    .booking-header h1 {
+
+        font-size: 26px;
+
+    }
+
+    .booking-table th,
+
+    .booking-table td {
+
+        padding: 14px;
+
+        font-size: 13px;
+
+    }
+
+}
+
+/* ==========================================
+            SCROLLBAR
+========================================== */
+
+.booking-table-wrapper::-webkit-scrollbar {
+
+    height: 8px;
+
+}
+
+.booking-table-wrapper::-webkit-scrollbar-thumb {
+
+    background: #2563eb;
+
+    border-radius: 20px;
+
+}
+
+.booking-table-wrapper::-webkit-scrollbar-track {
+
+    background: #eef2f7;
+
+}
+
+/* ==========================================
+            ANIMATION
+========================================== */
+
+.booking-filter,
+
+.booking-table-wrapper {
+
+    animation: fadeUp .5s ease;
+
+}
+
+@keyframes fadeUp {
+
+    from {
+
+        opacity: 0;
+
+        transform: translateY(20px);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform: translateY(0);
+
+    }
+
+}

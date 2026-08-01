@@ -1,0 +1,103 @@
+{% load static %}
+
+<header id="header">
+  <nav class="navbar">
+    <!-- ================= LOGO ================= -->
+    <a href="/" class="logo">
+      <img src="{% static 'assets/logo1.png' %}" alt="Logo" />
+      {% comment %} <div class="logo-text">
+        <h2>Royal Palace</h2>
+        <span>Event Management</span>
+      </div> {% endcomment %}
+    </a>
+
+    <!-- ================= MENU ================= -->
+
+    <ul class="nav-menu" id="navMenu">
+      <li>
+        <a href="/" class="active">Home</a>
+      </li>
+
+      <li>
+        <a href="{% url 'about_us' %}">About Us</a>
+      </li>
+
+      <!-- SERVICES -->
+
+      <li class="dropdown">
+        <a href="#">
+          Services
+
+          <i class="fa-solid fa-chevron-down"></i>
+        </a>
+
+        <ul class="dropdown-menu">
+          <li>
+            <a href="#">
+              <i class="fa-solid fa-building"></i>
+
+              Halls
+            </a>
+
+            <ul class="sub-dropdown">
+              {% for hall in hall_menu %}
+                <li>
+                  <a href="{% url 'hall_detail' hall.slug %}">{{ hall.name }}</a>
+                </li>
+              {% empty %}
+                <li>
+                  <a href="#">No Hall Available</a>
+                </li>
+              {% endfor %}
+            </ul>
+          </li>
+
+          <li>
+            <a href="{% url 'room' %}">
+              <i class="fa-solid fa-bed"></i>
+
+              Rooms
+            </a>
+          </li>
+
+          <li>
+            <a href="{% url 'catering' %}">
+              <i class="fa-solid fa-utensils"></i>
+
+              Catering
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <li>
+        <<a href="{% url 'cms:gallery_frontend' %}">Gallery</a>
+      </li>
+
+      <li>
+        <a href="#">Contact</a>
+      </li>
+    </ul>
+
+    <!-- ================= RIGHT SIDE ================= -->
+
+    <div class="nav-right">
+      <a href="{% url 'cart' %}" class="cart-btn"><i class="fa-solid fa-cart-shopping"></i></a>
+
+      {% comment %} <a href="#" class="quote-btn">Get Quote</a> {% endcomment %}
+      <div class="d-flex align-items-center gap-2">
+        <!-- Existing Buttons (like Cart, Get Quote) -->
+
+        <!-- Admin / CMS Login Button -->
+        <a href="{% url 'cms:login' %}" class="btn btn-outline-dark rounded-pill px-3 py-2 small fw-bold quote-btn"><i class="fas fa-user-shield me-1"></i> Admin Login</a>
+      </div>
+
+      <div class="menu-toggle" id="menuToggle">
+        <i class="fa-solid fa-bars"></i>
+      </div>
+
+    </div>
+
+    <!-- Main Website Header / Navbar -->
+  </nav>
+</header>

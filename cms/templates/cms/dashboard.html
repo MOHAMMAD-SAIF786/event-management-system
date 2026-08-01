@@ -1,0 +1,384 @@
+{% extends 'cms/base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'cms/css/dashboard.css' %}" />
+{% endblock  %}
+
+{% block title %}
+  Dashboard
+{% endblock %}
+
+{% block content %}
+  <div class="dashboard-container">
+    <!-- ========================= -->
+    <!-- PAGE HEADER -->
+    <!-- ========================= -->
+
+    <div class="page-header">
+      <div>
+        <h1>Dashboard</h1>
+
+        <p>
+          Welcome back,
+          <strong>{{ request.user.username }}</strong>
+        </p>
+      </div>
+
+      <div class="header-actions">
+        <button class="action-btn">
+          <i class="fa-solid fa-plus"></i>
+
+          New Booking
+        </button>
+
+        <button class="action-btn secondary">
+          <i class="fa-solid fa-file-invoice"></i>
+
+          Generate Invoice
+        </button>
+      </div>
+    </div>
+
+    <!-- ========================= -->
+    <!-- DASHBOARD CARDS -->
+    <!-- ========================= -->
+
+    <div class="dashboard-cards">
+      <!-- TOTAL BOOKING -->
+
+      <div class="dashboard-card booking-card">
+        <div class="card-icon">
+          <i class="fa-solid fa-calendar-check"></i>
+        </div>
+
+        <div class="card-content">
+          <span>Total Bookings</span>
+
+          <h2>{{ total_bookings }}</h2>
+
+          <small>
+            <i class="fa-solid fa-arrow-trend-up"></i>
+
+            All Bookings
+          </small>
+        </div>
+      </div>
+
+      <!-- PENDING -->
+
+      <div class="dashboard-card pending-card">
+        <div class="card-icon">
+          <i class="fa-solid fa-clock"></i>
+        </div>
+
+        <div class="card-content">
+          <span>Pending</span>
+
+          <h2>{{ pending_bookings }}</h2>
+
+          <small>Waiting Approval</small>
+        </div>
+      </div>
+
+      <!-- CONFIRMED -->
+
+      <div class="dashboard-card confirmed-card">
+        <div class="card-icon">
+          <i class="fa-solid fa-circle-check"></i>
+        </div>
+
+        <div class="card-content">
+          <span>Confirmed</span>
+
+          <h2>{{ confirmed_bookings }}</h2>
+
+          <small>Successfully Confirmed</small>
+        </div>
+      </div>
+
+      <!-- CANCELLED -->
+
+      <div class="dashboard-card cancelled-card">
+        <div class="card-icon">
+          <i class="fa-solid fa-circle-xmark"></i>
+        </div>
+
+        <div class="card-content">
+          <span>Cancelled</span>
+
+          <h2>{{ cancelled_bookings }}</h2>
+
+          <small>Booking Cancelled</small>
+        </div>
+      </div>
+
+      <!-- TODAY -->
+
+      <div class="dashboard-card today-card">
+        <div class="card-icon">
+          <i class="fa-solid fa-calendar-day"></i>
+        </div>
+
+        <div class="card-content">
+          <span>Today's Booking</span>
+
+          <h2>{{ today_bookings }}</h2>
+
+          <small>{{ today_bookings }} Today</small>
+        </div>
+      </div>
+
+      <!-- REVENUE -->
+
+      <div class="dashboard-card revenue-card">
+        <div class="card-icon">
+          <i class="fa-solid fa-indian-rupee-sign"></i>
+        </div>
+
+        <div class="card-content">
+          <span>Total Revenue</span>
+
+          <h2>₹ {{ revenue }}</h2>
+
+          <small>Confirmed Payments</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================= -->
+    <!-- MAIN CONTENT -->
+    <!-- ========================= -->
+
+    <div class="dashboard-grid">
+      <!-- ========================= -->
+      <!-- RECENT BOOKINGS -->
+      <!-- ========================= -->
+
+      <div class="dashboard-box">
+        <div class="box-header">
+          <h3>
+            <i class="fa-solid fa-calendar-days"></i>
+            Recent Bookings
+          </h3>
+
+          <a href="#" class="view-all">View All</a>
+        </div>
+
+        <table class="booking-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+
+              <th>Customer</th>
+
+              <th>Event</th>
+
+              <th>Date</th>
+
+              <th>Status</th>
+
+              <th>Amount</th>
+
+              <th>Action</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {% for booking in recent_bookings %}
+              <tr>
+                <td>#{{ booking.id }}</td>
+
+                <td>
+                  <strong>{{ booking.customer.name }}</strong>
+
+                  <br />
+
+                  <small>{{ booking.customer.phone }}</small>
+                </td>
+
+                <td>{{ booking.event_type }}</td>
+
+                <td>{{ booking.event_date }}</td>
+
+                <td>
+                  {% if booking.status == 'confirmed' %}
+                    <span class="status confirmed">Confirmed</span>
+                  {% elif booking.status == 'pending' %}
+                    <span class="status pending">Pending</span>
+                  {% elif booking.status == 'cancelled' %}
+                    <span class="status cancelled">Cancelled</span>
+                  {% else %}
+                    <span class="status draft">Draft</span>
+                  {% endif %}
+                </td>
+
+                <td>₹ {{ booking.total_amount }}</td>
+
+                <td>
+                  <button class="table-btn"><i class="fa-solid fa-eye"></i></button>
+                </td>
+              </tr>
+            {% empty %}
+              <tr>
+                <td colspan="7">No Bookings Available</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ========================= -->
+      <!-- QUICK ACTIONS -->
+      <!-- ========================= -->
+
+      <div class="dashboard-sidebar">
+        <div class="dashboard-box">
+          <div class="box-header">
+            <h3>Quick Actions</h3>
+          </div>
+
+          <div class="quick-actions">
+            <a href="#" class="quick-card">
+              <i class="fa-solid fa-plus"></i>
+
+              <span>New Booking</span>
+            </a>
+
+            <a href="#" class="quick-card">
+              <i class="fa-solid fa-hotel"></i>
+
+              <span>Add Hall</span>
+            </a>
+
+            <a href="#" class="quick-card">
+              <i class="fa-solid fa-bed"></i>
+
+              <span>Add Room</span>
+            </a>
+
+            <a href="#" class="quick-card">
+              <i class="fa-solid fa-utensils"></i>
+
+              <span>Catering</span>
+            </a>
+
+            <a href="#" class="quick-card">
+              <i class="fa-solid fa-images"></i>
+
+              <span>Gallery</span>
+            </a>
+
+            <a href="#" class="quick-card">
+              <i class="fa-solid fa-file-invoice"></i>
+
+              <span>Invoices</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ========================================= -->
+    <!-- ANALYTICS SECTION -->
+    <!-- ========================================= -->
+
+    <div class="analytics-grid">
+      <!-- Revenue Chart -->
+
+      <div class="dashboard-box chart-box">
+        <div class="box-header">
+          <h3>
+            <i class="fa-solid fa-chart-line"></i>
+
+            Revenue Analytics
+          </h3>
+        </div>
+
+        <canvas id="revenueChart"></canvas>
+      </div>
+
+      <!-- Booking Status -->
+
+      <div class="dashboard-box">
+        <div class="box-header">
+          <h3>Booking Statistics</h3>
+        </div>
+
+        <div class="stats-list">
+          <div class="stat-item">
+            <span>Confirmed</span>
+
+            <strong>{{ confirmed_bookings }}</strong>
+          </div>
+
+          <div class="stat-item">
+            <span>Pending</span>
+
+            <strong>{{ pending_bookings }}</strong>
+          </div>
+
+          <div class="stat-item">
+            <span>Cancelled</span>
+
+            <strong>{{ cancelled_bookings }}</strong>
+          </div>
+
+          <div class="stat-item">
+            <span>Total Revenue</span>
+
+            <strong>₹ {{ revenue }}</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================= -->
+    <!-- BOTTOM SECTION -->
+    <!-- ========================================= -->
+
+    <div class="bottom-grid">
+      <!-- Calendar -->
+
+      <div class="dashboard-box">
+        <div class="box-header">
+          <h3>
+            <i class="fa-solid fa-calendar-days"></i>
+
+            Calendar
+          </h3>
+        </div>
+
+        <div id="calendar">
+          <h2>{{ today_bookings }}</h2>
+
+          <p>Bookings Today</p>
+        </div>
+      </div>
+
+      <!-- Upcoming -->
+
+      <div class="dashboard-box">
+        <div class="box-header">
+          <h3>Upcoming Events</h3>
+        </div>
+
+        <div class="event-list">
+          {% for booking in recent_bookings %}
+            <div class="event-card">
+              <div>
+                <h4>{{ booking.customer_name }}</h4>
+
+                <small>{{ booking.event_date }}</small>
+              </div>
+
+              <span>{{ booking.event_type }}</span>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script src="{% static 'cms/js/dashboard.js' %}"></script>
+{% endblock %}

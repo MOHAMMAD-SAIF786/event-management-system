@@ -1,0 +1,156 @@
+<!-- FOOTER -->
+
+{% load static %}
+
+<footer class="footer">
+
+    <div class="footer-container">
+
+        <!-- Logo & About -->
+        <div class="footer-col">
+
+            <a href="/" class="footer-logo">
+                <img src="{% static 'assets/logo1.png' %}" alt="Royal Palace">
+            </a>
+
+            <h2>ROYAL PALACE</h2>
+
+            <p>
+                Creating unforgettable weddings, receptions,
+                birthdays and corporate events with elegance
+                and perfection.
+            </p>
+
+        </div>
+
+        <!-- Navigation -->
+        <div class="footer-col">
+
+            <h3>Navigation</h3>
+
+            <ul>
+
+                <li><a href="/">Home</a></li>
+
+                <li><a href="{% url 'about_us' %}">About Us</a></li>
+
+                <li><a href="#">Services</a></li>
+
+                <li><a href="#">Gallery</a></li>
+
+                <li><a href="#">Contact</a></li>
+
+            </ul>
+
+        </div>
+
+        <!-- Contact -->
+        <div class="footer-col">
+
+            <h3>Contact</h3>
+
+            <p>
+                <i class="fa-solid fa-phone"></i>
+                +91 9876543210
+            </p>
+
+            <p>
+                <i class="fa-solid fa-envelope"></i>
+                info@royalpalace.com
+            </p>
+
+            <h4>Follow Us</h4>
+
+            <div class="social-links">
+
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+
+                <a href="#"><i class="fab fa-instagram"></i></a>
+
+                <a href="#"><i class="fab fa-youtube"></i></a>
+
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+
+            </div>
+
+        </div>
+
+        <!-- Address -->
+        <div class="footer-col">
+
+            <h3>Reach Us</h3>
+
+            <p>
+
+                <strong>Office Address</strong><br>
+
+                Royal Palace Event Management<br>
+
+                Bilaspur, Chhattisgarh
+
+            </p>
+
+            <br>
+
+            <p>
+
+                <strong>Venue Address</strong><br>
+
+                Near City Mall,<br>
+
+                Bilaspur (C.G.)
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+
+        <p>
+
+            © 2026 Royal Palace Event Management.
+            All Rights Reserved.
+
+        </p>
+
+    </div>
+
+</footer>
+<script>
+
+    function changeQty(id,value){
+
+    let input = document.getElementById(id);
+
+    let qty = parseInt(input.value);
+
+    qty += value;
+
+    if(qty < 0){
+        qty = 0;
+    }
+
+    input.value = qty;
+}
+
+function addRequirement(){
+
+    let input = document.getElementById("extraItem");
+
+    let list = document.getElementById("requirementList");
+
+    if(input.value.trim() !== ""){
+
+        let li = document.createElement("li");
+
+        li.textContent = input.value;
+
+        list.appendChild(li);
+
+        input.value = "";
+    }
+}
+
+</script>

@@ -1,0 +1,207 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+About Us | RoyalEvents
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/about_us.css' %}" />
+{% endblock %}
+
+{% block content %}
+<section class="about-section">
+  <div class="about-container">
+    <!-- IMAGE -->
+
+    <div class="about-image">
+      <div class="image-card">
+        <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=900" alt="Event" />
+      </div>
+
+      <div class="experience-box">
+        <h2>15+</h2>
+
+        <p>
+          YEARS OF<br />
+          LEGACY
+        </p>
+      </div>
+    </div>
+
+    <!-- CONTENT -->
+
+    <div class="about-content">
+      <div class="section-title">OUR STORY</div>
+
+      <h1>
+        Making Your
+        <span>Special Moments</span>
+        Beautiful
+      </h1>
+
+      <p>At Royal Event Management, we believe every event should be perfect. We create unforgettable celebrations with
+        premium decoration, catering and professional event planning.</p>
+
+      <ul>
+        <li>Custom Event Planning & Decor</li>
+
+        <li>Best Quality Catering Services</li>
+
+        <li>Beautiful Flower & Stage Work</li>
+      </ul>
+
+      <a href="#" class="about-btn">LEARN MORE ABOUT US</a>
+    </div>
+  </div>
+</section>
+
+<!-- why choose us section  -->
+<section class="choose-section">
+  <h2>Why Choose Us</h2>
+  <p class="subtitle">
+    Everything you need for a perfect event
+  </p>
+  <div class="cards-container">
+    <!-- CARD 1 -->
+    <div class="flip-card">
+      <div class="flip-inner">
+        <div class="card-front">
+          <div class="icon">📅</div>
+          <h3>Easy Booking</h3>
+          <p>
+            Book halls and catering online easily.
+          </p>
+        </div>
+        <div class="card-back">
+          <h3>Easy Booking</h3>
+          <p>
+            Fast and simple booking system with
+            availability checking.
+          </p>
+          <button>
+            Explore
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- CARD 2 -->
+    <div class="flip-card">
+      <div class="flip-inner">
+        <div class="card-front">
+          <div class="icon">🍽️</div>
+          <h3>Best Catering</h3>
+          <p>
+            Premium quality food with multiple packages.
+          </p>
+        </div>
+        <div class="card-back">
+          <h3>Catering</h3>
+          <p>
+            Delicious food prepared by professional
+            chefs for every occasion.
+          </p>
+          <button>
+            Explore
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- CARD 3 -->
+    <div class="flip-card">
+      <div class="flip-inner">
+        <div class="card-front">
+          <div class="icon">📸</div>
+          <h3>Photography</h3>
+          <p>
+            Professional photography & videography.
+          </p>
+        </div>
+        <div class="card-back">
+          <h3>Photography</h3>
+          <p>
+            Capture your memorable moments with
+            our creative team.
+          </p>
+          <button>
+            Explore
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- CARD 4 -->
+    <div class="flip-card">
+      <div class="flip-inner">
+        <div class="card-front">
+          <div class="icon">🎵</div>
+          <h3>DJ & Music</h3>
+          <p>
+            Enjoy music and entertainment.
+          </p>
+        </div>
+        <div class="card-back">
+          <h3>DJ Setup</h3>
+          <p>
+            Complete sound system and entertainment
+            for your events.
+          </p>
+          <button>
+            Explore
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- our process -->
+<section class="process-section">
+
+  <div class="process-title">
+    <h1>How We Work</h1>
+    <p>OUR STEP-BY-STEP PROCESS</p>
+  </div>
+
+
+  <div class="process-container">
+
+    <div class="process-card">
+      <span class="number">01</span>
+      <h2>Meeting You</h2>
+      <p>
+        We talk with you to understand exactly what you want for your dream event.
+      </p>
+    </div>
+
+
+    <div class="process-card">
+      <span class="number">02</span>
+      <h2>Planning</h2>
+      <p>
+        Our creative team designs a perfect plan with beautiful themes and ideas.
+      </p>
+    </div>
+
+
+    <div class="process-card">
+      <span class="number">03</span>
+      <h2>Setup</h2>
+      <p>
+        Our expert team manages decoration, arrangements and everything perfectly.
+      </p>
+    </div>
+
+
+    <div class="process-card">
+      <span class="number">04</span>
+      <h2>The Event</h2>
+      <p>
+        Everything is ready. Enjoy your memorable celebration with your guests.
+      </p>
+    </div>
+
+  </div>
+
+</section>
+<script src="{% static 'js/about_us.js' %}"></script>
+{% endblock %}

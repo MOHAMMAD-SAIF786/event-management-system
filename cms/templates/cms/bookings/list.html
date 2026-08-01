@@ -1,0 +1,128 @@
+{% extends 'cms/base.html' %}
+{% load static %}
+
+{% block title %}
+  Bookings
+{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'cms/css/booking.css' %}" />
+{% endblock %}
+
+{% block content %}
+  <div class="booking-container">
+    <!-- ========================= -->
+    <!-- PAGE HEADER -->
+    <!-- ========================= -->
+
+    <div class="booking-header">
+      <div>
+        <h1>Bookings</h1>
+        <p>Manage all event bookings</p>
+      </div>
+
+      <a href="#" class="btn-primary">
+        <i class="fa-solid fa-plus"></i>
+        New Booking
+      </a>
+    </div>
+
+    <!-- ========================= -->
+    <!-- FILTER SECTION -->
+    <!-- ========================= -->
+
+    <div class="booking-filter">
+      <form method="get">
+        <div class="search-box">
+          <i class="fa-solid fa-magnifying-glass"></i>
+
+          <input type="text" name="search" placeholder="Search by Booking ID, Customer or Phone" />
+        </div>
+
+        <select name="status">
+          <option value="">All Status</option>
+          <option value="draft">Draft</option>
+          <option value="pending">Pending</option>
+          <option value="confirmed">Confirmed</option>
+          <option value="cancelled">Cancelled</option>
+        </select>
+
+        <button type="submit">
+          <i class="fa-solid fa-filter"></i>
+
+          Filter
+        </button>
+      </form>
+    </div>
+
+    <!-- ========================= -->
+    <!-- TABLE -->
+    <!-- ========================= -->
+
+    <div class="booking-table-wrapper">
+      <table class="booking-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+
+            <th>Customer</th>
+
+            <th>Phone</th>
+
+            <th>Event</th>
+
+            <th>Event Date</th>
+
+            <th>Total</th>
+
+            <th>Status</th>
+
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {% for booking in bookings %}
+            <tr>
+              <td>#{{ booking.id }}</td>
+
+              <td>{{ booking.customer_name }}</td>
+
+              <td>{{ booking.customer_phone }}</td>
+
+              <td>{{ booking.event_type }}</td>
+
+              <td>{{ booking.event_date }}</td>
+
+              <td>₹ {{ booking.total_amount }}</td>
+
+              <td>
+                {% if booking.status == 'confirmed' %}
+                  <span class="status confirmed">Confirmed</span>
+                {% elif booking.status == 'pending' %}
+                  <span class="status pending">Pending</span>
+                {% elif booking.status == 'cancelled' %}
+                  <span class="status cancelled">Cancelled</span>
+                {% endif %}
+              </td>
+
+              <td>
+                <div class="action-buttons">
+                  <a href="{% url 'cms:booking_detail' booking.id %}" class="view-btn" title="View"><i class="fa-solid fa-eye"></i></a>
+
+                  <a href="{% url 'cms:booking_edit' booking.id %}" class="edit-btn" title="Edit"><i class="fa-solid fa-pen"></i></a>
+
+                  <a href="{% url 'cms:booking_delete' booking.id %}" class="delete-btn" onclick="return confirm('Are you sure you want to cancel this booking?')"><i class="fa-solid fa-ban"></i></a>
+                </div>
+              </td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td colspan="8" class="empty">No Bookings Found</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endblock %}

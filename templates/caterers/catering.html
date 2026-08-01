@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+  Catering | RoyalEvents  
+{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/catering.css' %}" />
+{% endblock %}
+
+{% block content %}
+<section class="catering-hero">
+    <div class="hero-content">
+        <h1>Catering Packages</h1>
+        <p>Select the perfect menu for your event</p>
+    </div>
+</section>
+
+<section class="catering-packages">
+
+    {% for package in packages %}
+    <div class="package-card {{ package.css_class }}">
+        {% if package.badge %}
+            <span class="badge">
+                {{ package.badge }}
+            </span>
+        {% endif %}
+        <h3>{{ package.name }}</h3>
+        <div class="price">₹{{package.price }} / Plate</div>
+
+        <ul>
+            {% for feature in package.features.all %}
+                <li>✔ {{ feature.name }}</li>
+            {% endfor %}
+        </ul>
+
+        <a href="{% url 'package_detail' package.slug %}" class="package-btn">View Details</a>
+    </div>
+    {% endfor %}
+</section>
+{% endblock content %}

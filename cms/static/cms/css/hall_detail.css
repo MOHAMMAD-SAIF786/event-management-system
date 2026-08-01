@@ -1,0 +1,732 @@
+/* ==========================================
+                PAGE
+========================================== */
+
+.hall-page {
+    padding: 30px;
+}
+
+/* ==========================================
+                HEADER
+========================================== */
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.page-header h1 {
+    font-size: 32px;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.page-header p {
+    color: #64748b;
+    margin-top: 5px;
+}
+
+.header-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.back-btn,
+.save-btn {
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 12px 22px;
+
+    border-radius: 12px;
+
+    text-decoration: none;
+
+    font-weight: 600;
+
+    transition: .3s;
+
+}
+
+.back-btn {
+
+    background: #e2e8f0;
+
+    color: #334155;
+
+}
+
+.save-btn {
+
+    background: #2563eb;
+
+    color: #fff;
+
+}
+
+.back-btn:hover,
+.save-btn:hover {
+
+    transform: translateY(-2px);
+
+}
+
+/* ==========================================
+                CARD
+========================================== */
+
+.glass-card {
+
+    background: #fff;
+
+    border-radius: 18px;
+
+    padding: 25px;
+
+    margin-bottom: 25px;
+
+    box-shadow: 0 8px 25px rgba(0, 0, 0, .06);
+
+}
+
+.glass-card h2 {
+
+    margin-bottom: 20px;
+
+    color: #1e293b;
+
+}
+
+/* ==========================================
+                TOP GRID
+========================================== */
+
+.top-grid {
+
+    display: grid;
+
+    grid-template-columns: 350px 1fr;
+
+    gap: 25px;
+
+    margin-bottom: 25px;
+
+}
+
+/* ==========================================
+                IMAGE
+========================================== */
+
+.image-card {
+
+    overflow: hidden;
+
+}
+
+.image-card img {
+
+    width: 100%;
+
+    height: 260px;
+
+    object-fit: cover;
+
+    border-radius: 14px;
+
+}
+
+.image-footer {
+
+    text-align: center;
+
+    font-weight: 700;
+
+    margin-top: 15px;
+
+    font-size: 18px;
+
+}
+
+/* ==========================================
+                INFO GRID
+========================================== */
+
+.info-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 20px;
+
+}
+
+.info-grid label {
+
+    display: block;
+
+    color: #64748b;
+
+    margin-bottom: 6px;
+
+    font-size: 13px;
+
+}
+
+.info-grid p {
+
+    font-weight: 600;
+
+    color: #0f172a;
+
+}
+
+/* ==========================================
+                SETTINGS
+========================================== */
+
+.setting-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 20px;
+
+}
+
+.setting-item {
+
+    padding: 18px;
+
+    border-radius: 14px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    color: #fff;
+
+}
+
+.setting-item i {
+
+    font-size: 26px;
+
+}
+
+.setting-item span {
+
+    font-size: 13px;
+
+    opacity: .9;
+
+}
+
+.setting-item strong {
+
+    display: block;
+
+    margin-top: 3px;
+
+}
+
+.green {
+    background: #10b981;
+}
+
+.red {
+    background: #ef4444;
+}
+
+.gold {
+    background: #f59e0b;
+}
+
+.blue {
+    background: #3b82f6;
+}
+
+.purple {
+    background: #8b5cf6;
+}
+
+.gray {
+    background: #64748b;
+}
+
+/* ==========================================
+            DESCRIPTION
+========================================== */
+
+.description-box {
+
+    background: #f8fafc;
+
+    border-radius: 12px;
+
+    padding: 18px;
+
+    line-height: 1.8;
+
+    color: #334155;
+
+}
+
+/* ==========================================
+            SECTION HEADER
+========================================== */
+
+.section-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 20px;
+
+}
+
+.small-add-btn {
+
+    background: #2563eb;
+
+    color: #fff;
+
+    padding: 10px 18px;
+
+    border-radius: 10px;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+}
+
+/* ==========================================
+            TABLE
+========================================== */
+
+.mini-table {
+
+    width: 100%;
+
+    border-collapse: collapse;
+
+}
+
+.mini-table th {
+
+    background: #f8fafc;
+
+    padding: 14px;
+
+    text-align: left;
+
+}
+
+.mini-table td {
+
+    padding: 15px;
+
+    border-bottom: 1px solid #eef2f7;
+
+}
+
+.category-box {
+
+    margin-bottom: 30px;
+
+}
+
+.category-box h3 {
+
+    margin-bottom: 15px;
+
+}
+
+/* ==========================================
+            ACTION
+========================================== */
+
+.action-buttons {
+
+    display: flex;
+
+    gap: 8px;
+
+}
+
+.action-buttons a {
+
+    width: 36px;
+
+    height: 36px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    border-radius: 10px;
+
+    color: #fff;
+
+    text-decoration: none;
+
+}
+
+.edit-btn {
+
+    background: #10b981;
+
+}
+
+.delete-btn {
+
+    background: #ef4444;
+
+}
+
+/* ==========================================
+            GALLERY
+========================================== */
+
+.gallery-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+
+    gap: 20px;
+
+}
+
+.gallery-card {
+
+    position: relative;
+
+    overflow: hidden;
+
+    border-radius: 14px;
+
+}
+
+.gallery-card img {
+
+    width: 100%;
+
+    height: 180px;
+
+    object-fit: cover;
+
+    transition: .3s;
+
+}
+
+.gallery-overlay {
+
+    position: absolute;
+
+    inset: 0;
+
+    background: rgba(0, 0, 0, .5);
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 15px;
+
+    opacity: 0;
+
+    transition: .3s;
+
+}
+
+.gallery-card:hover img {
+
+    transform: scale(1.08);
+
+}
+
+.gallery-card:hover .gallery-overlay {
+
+    opacity: 1;
+
+}
+
+.gallery-overlay a {
+
+    width: 42px;
+
+    height: 42px;
+
+    border-radius: 50%;
+
+}
+
+/* ==========================================
+            STAGE
+========================================== */
+
+.stage-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+
+    gap: 20px;
+
+}
+
+.stage-card {
+
+    background: #f8fafc;
+
+    border-radius: 16px;
+
+    overflow: hidden;
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, .05);
+
+}
+
+.stage-card img {
+
+    width: 100%;
+
+    height: 180px;
+
+    object-fit: cover;
+
+}
+
+.stage-card h4 {
+
+    padding: 15px 15px 5px;
+
+}
+
+.stage-card p {
+
+    padding: 0 15px 15px;
+
+    color: #2563eb;
+
+    font-weight: 700;
+
+}
+
+.card-actions {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    padding-bottom: 18px;
+
+}
+
+/* ==========================================
+            FOOTER
+========================================== */
+
+.footer-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 25px;
+
+}
+
+.footer-grid label {
+
+    color: #64748b;
+
+    display: block;
+
+    margin-bottom: 6px;
+
+}
+
+.footer-grid p {
+
+    font-weight: 600;
+
+}
+
+/* ==========================================
+            EMPTY
+========================================== */
+
+.empty-row {
+
+    text-align: center;
+
+    color: #94a3b8;
+
+    padding: 20px;
+
+}
+
+/* ==========================================
+            RESPONSIVE
+========================================== */
+
+@media(max-width:992px) {
+
+    .top-grid {
+
+        grid-template-columns: 1fr;
+
+    }
+
+    .setting-grid {
+
+        grid-template-columns: repeat(2, 1fr);
+
+    }
+
+}
+
+@media(max-width:768px) {
+
+    .page-header {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 20px;
+
+    }
+
+    .header-buttons {
+
+        width: 100%;
+
+    }
+
+    .back-btn,
+    .save-btn {
+
+        flex: 1;
+
+        justify-content: center;
+
+    }
+
+    .info-grid {
+
+        grid-template-columns: 1fr;
+
+    }
+
+    .setting-grid {
+
+        grid-template-columns: 1fr;
+
+    }
+
+    .footer-grid {
+
+        grid-template-columns: 1fr;
+
+    }
+
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.modal-content {
+    background: #ffffff;
+    padding: 24px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 8px;
+}
+
+.close-btn {
+    font-size: 24px;
+    cursor: pointer;
+    color: #64748b;
+}
+
+.form-group {
+    margin-bottom: 12px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-row {
+    display: flex;
+    gap: 12px;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.cancel-btn {
+    background: #f1f5f9;
+    border: 1px solid #cbd5e1;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.save-btn {
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+}

@@ -1,0 +1,487 @@
+/* ==========================================
+            PAGE
+========================================== */
+
+.edit-page {
+    padding: 30px;
+}
+
+/* ==========================================
+            HEADER
+========================================== */
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.page-header h1 {
+    font-size: 32px;
+    color: #0f172a;
+    font-weight: 700;
+}
+
+.page-header p {
+    color: #64748b;
+    margin-top: 5px;
+}
+
+.back-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #e2e8f0;
+    color: #334155;
+    text-decoration: none;
+    padding: 12px 22px;
+    border-radius: 12px;
+    font-weight: 600;
+    transition: .3s;
+}
+
+.back-btn:hover {
+    background: #cbd5e1;
+}
+
+/* ==========================================
+            CARD
+========================================== */
+
+.glass-card {
+    background: #fff;
+    border-radius: 18px;
+    padding: 28px;
+    margin-bottom: 25px;
+    box-shadow: 0 8px 30px rgba(15, 23, 42, .06);
+}
+
+.glass-card h2 {
+    margin-bottom: 25px;
+    color: #1e293b;
+}
+
+.feature-form {
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr auto;
+
+    gap: 15px;
+
+    margin: 25px 0;
+
+}
+
+.feature-form input {
+
+    height: 50px;
+
+    padding: 0 15px;
+
+    border: 1px solid #d9e2ef;
+
+    border-radius: 12px;
+
+    font-size: 15px;
+
+}
+
+.feature-list {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 15px;
+
+    margin-top: 20px;
+
+}
+
+.feature-item {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 18px;
+
+    border: 1px solid #edf2f7;
+
+    border-radius: 15px;
+
+    background: #fff;
+
+}
+
+.feature-left {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+}
+
+.feature-left i {
+
+    font-size: 20px;
+
+    color: #16a34a;
+
+}
+
+.feature-left h4 {
+
+    margin: 0;
+
+    font-size: 17px;
+
+}
+
+.feature-left small {
+
+    color: #64748b;
+
+}
+
+.feature-right {
+
+    display: flex;
+
+    gap: 10px;
+
+}
+
+.feature-right button {
+
+    border: none;
+
+    cursor: pointer;
+
+}
+
+.empty-row {
+
+    padding: 30px;
+
+    text-align: center;
+
+    color: #94a3b8;
+
+}
+
+/* 
+==========================================
+             GALARY CSS 
+==========================================
+*/
+.gallery-upload {
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr auto;
+
+    gap: 15px;
+
+    margin: 25px 0;
+
+}
+
+.gallery-upload input {
+
+    padding: 12px;
+
+    border: 1px solid #d9e2ef;
+
+    border-radius: 10px;
+
+}
+
+.gallery-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+
+    gap: 20px;
+
+    margin-top: 25px;
+
+}
+
+.gallery-card {
+
+    border: 1px solid #edf2f7;
+
+    border-radius: 15px;
+
+    overflow: hidden;
+
+    background: #fff;
+
+}
+
+.gallery-card img {
+
+    width: 100%;
+
+    height: 180px;
+
+    object-fit: cover;
+
+}
+
+.gallery-info {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 15px;
+
+}
+
+.gallery-info h4 {
+
+    margin: 0;
+
+    font-size: 15px;
+
+}
+
+/* ==========================================
+            FORM GRID
+========================================== */
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group.full {
+    margin-top: 25px;
+}
+
+.form-group label {
+    margin-bottom: 8px;
+    color: #475569;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.form-group input,
+.form-group textarea {
+
+    width: 100%;
+
+    border: 1px solid #dbe4ee;
+
+    border-radius: 12px;
+
+    padding: 14px 16px;
+
+    font-size: 15px;
+
+    outline: none;
+
+    transition: .3s;
+
+    background: #fff;
+
+}
+
+.form-group textarea {
+    resize: vertical;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+
+    border-color: #2563eb;
+
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, .08);
+
+}
+
+/* ==========================================
+            IMAGE
+========================================== */
+
+.image-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+}
+
+.preview-image {
+
+    width: 100%;
+
+    height: 220px;
+
+    object-fit: cover;
+
+    border-radius: 14px;
+
+    margin-bottom: 15px;
+
+    border: 1px solid #e5e7eb;
+
+}
+
+.image-grid input[type=file] {
+
+    width: 100%;
+
+    padding: 10px;
+
+}
+
+/* ==========================================
+            CHECKBOX
+========================================== */
+
+.checkbox-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 20px;
+
+}
+
+.checkbox-grid label {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 14px 18px;
+
+    border: 1px solid #dbe4ee;
+
+    border-radius: 12px;
+
+    cursor: pointer;
+
+    transition: .3s;
+
+    font-weight: 600;
+
+    color: #334155;
+
+}
+
+.checkbox-grid label:hover {
+
+    background: #f8fafc;
+
+}
+
+.checkbox-grid input {
+
+    width: 18px;
+
+    height: 18px;
+
+}
+
+/* ==========================================
+            BUTTON
+========================================== */
+
+.submit-box {
+
+    display: flex;
+
+    justify-content: flex-end;
+
+}
+
+.save-btn {
+
+    background: #2563eb;
+
+    color: #fff;
+
+    border: none;
+
+    padding: 15px 34px;
+
+    border-radius: 14px;
+
+    cursor: pointer;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    transition: .3s;
+
+}
+
+.save-btn:hover {
+
+    background: #1d4ed8;
+
+    transform: translateY(-2px);
+
+}
+
+/* ==========================================
+            RESPONSIVE
+========================================== */
+
+@media(max-width:900px) {
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .image-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .checkbox-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+    .submit-box {
+        justify-content: stretch;
+    }
+
+    .save-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+}

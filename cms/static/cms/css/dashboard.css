@@ -1,0 +1,925 @@
+/* ===========================
+   DASHBOARD CONTAINER
+=========================== */
+
+.dashboard-container{
+    padding:30px;
+}
+
+/* ===========================
+   PAGE HEADER
+=========================== */
+
+.page-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:35px;
+    flex-wrap:wrap;
+    gap:20px;
+}
+
+.page-header h1{
+    font-size:32px;
+    font-weight:700;
+    color:#1e293b;
+}
+
+.page-header p{
+    margin-top:8px;
+    color:#64748b;
+    font-size:15px;
+}
+
+.header-actions{
+    display:flex;
+    gap:15px;
+}
+
+.action-btn{
+    border:none;
+    outline:none;
+    cursor:pointer;
+    padding:13px 24px;
+    border-radius:14px;
+    background:#2563eb;
+    color:#fff;
+    font-size:14px;
+    font-weight:600;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    transition:.3s;
+}
+
+.action-btn:hover{
+    transform:translateY(-3px);
+    background:#1d4ed8;
+}
+
+.action-btn.secondary{
+    background:#fff;
+    color:#2563eb;
+    border:2px solid #2563eb;
+}
+
+.action-btn.secondary:hover{
+    background:#2563eb;
+    color:#fff;
+}
+
+/* ===========================
+   DASHBOARD CARDS
+=========================== */
+
+.dashboard-cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:22px;
+    margin-bottom:35px;
+}
+
+.dashboard-card{
+    background:#fff;
+    border-radius:22px;
+    padding:28px;
+    display:flex;
+    align-items:center;
+    gap:20px;
+    box-shadow:0 12px 30px rgba(0,0,0,.06);
+    transition:.35s;
+    position:relative;
+    overflow:hidden;
+}
+
+.dashboard-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 20px 40px rgba(0,0,0,.10);
+}
+
+.dashboard-card::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:5px;
+}
+
+/* ===========================
+   CARD COLORS
+=========================== */
+
+.booking-card::before{
+    background:#2563eb;
+}
+
+.pending-card::before{
+    background:#f59e0b;
+}
+
+.confirmed-card::before{
+    background:#10b981;
+}
+
+.cancelled-card::before{
+    background:#ef4444;
+}
+
+.today-card::before{
+    background:#8b5cf6;
+}
+
+.revenue-card::before{
+    background:#14b8a6;
+}
+
+/* ===========================
+   CARD ICON
+=========================== */
+
+.card-icon{
+    width:70px;
+    height:70px;
+    border-radius:20px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:30px;
+    color:#fff;
+    flex-shrink:0;
+}
+
+.booking-card .card-icon{
+    background:#2563eb;
+}
+
+.pending-card .card-icon{
+    background:#f59e0b;
+}
+
+.confirmed-card .card-icon{
+    background:#10b981;
+}
+
+.cancelled-card .card-icon{
+    background:#ef4444;
+}
+
+.today-card .card-icon{
+    background:#8b5cf6;
+}
+
+.revenue-card .card-icon{
+    background:#14b8a6;
+}
+
+/* ===========================
+   CARD CONTENT
+=========================== */
+
+.card-content{
+    flex:1;
+}
+
+.card-content span{
+    font-size:14px;
+    color:#64748b;
+    display:block;
+    margin-bottom:8px;
+}
+
+.card-content h2{
+    font-size:34px;
+    color:#0f172a;
+    margin-bottom:6px;
+}
+
+.card-content small{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    color:#64748b;
+    font-size:13px;
+}
+/* ==========================================
+        DASHBOARD GRID
+========================================== */
+
+.dashboard-grid{
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:25px;
+    margin-bottom:30px;
+}
+
+/* ==========================================
+        DASHBOARD BOX
+========================================== */
+
+.dashboard-box{
+    background:#fff;
+    border-radius:20px;
+    padding:25px;
+    box-shadow:0 10px 30px rgba(0,0,0,.06);
+}
+
+.box-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.box-header h3{
+    font-size:20px;
+    color:#111827;
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.view-all{
+    color:#2563eb;
+    font-size:14px;
+    font-weight:600;
+}
+
+.view-all:hover{
+    text-decoration:underline;
+}
+
+/* ==========================================
+            BOOKING TABLE
+========================================== */
+
+.booking-table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.booking-table thead{
+    background:#f8fafc;
+}
+
+.booking-table th{
+
+    padding:16px;
+    text-align:left;
+    font-size:14px;
+    color:#64748b;
+    font-weight:600;
+}
+
+.booking-table td{
+
+    padding:18px 16px;
+    border-top:1px solid #edf2f7;
+    color:#334155;
+    font-size:14px;
+}
+
+.booking-table tbody tr{
+    transition:.3s;
+}
+
+.booking-table tbody tr:hover{
+    background:#f9fbff;
+}
+
+.booking-table small{
+    color:#94a3b8;
+}
+
+/* ==========================================
+            STATUS
+========================================== */
+
+.status{
+
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:8px 16px;
+
+    border-radius:30px;
+
+    font-size:12px;
+
+    font-weight:600;
+
+}
+
+.status.confirmed{
+
+    background:#dcfce7;
+
+    color:#15803d;
+
+}
+
+.status.pending{
+
+    background:#fef3c7;
+
+    color:#b45309;
+
+}
+
+.status.cancelled{
+
+    background:#fee2e2;
+
+    color:#b91c1c;
+
+}
+
+.status.draft{
+
+    background:#dbeafe;
+
+    color:#1d4ed8;
+
+}
+
+/* ==========================================
+            TABLE BUTTON
+========================================== */
+
+.table-btn{
+
+    width:38px;
+
+    height:38px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#2563eb;
+
+    color:#fff;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.table-btn:hover{
+
+    background:#1d4ed8;
+
+    transform:translateY(-2px);
+
+}
+
+/* ==========================================
+            QUICK ACTIONS
+========================================== */
+
+.quick-actions{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:15px;
+
+}
+
+.quick-card{
+
+    background:#f8fafc;
+
+    border-radius:16px;
+
+    padding:22px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:12px;
+
+    color:#334155;
+
+    transition:.35s;
+
+}
+
+.quick-card i{
+
+    font-size:28px;
+
+    color:#2563eb;
+
+}
+
+.quick-card span{
+
+    font-size:14px;
+
+    font-weight:600;
+
+}
+
+.quick-card:hover{
+
+    background:#2563eb;
+
+    transform:translateY(-5px);
+
+}
+
+.quick-card:hover i,
+
+.quick-card:hover span{
+
+    color:#fff;
+
+}
+/* ==========================================
+        ANALYTICS GRID
+========================================== */
+
+.analytics-grid{
+
+    display:grid;
+
+    grid-template-columns:2fr 1fr;
+
+    gap:25px;
+
+    margin-bottom:30px;
+
+}
+
+/* ==========================================
+            CHART BOX
+========================================== */
+
+.chart-box{
+
+    min-height:420px;
+
+}
+
+.chart-box canvas{
+
+    width:100% !important;
+
+    height:330px !important;
+
+}
+
+/* ==========================================
+        BOOKING STATISTICS
+========================================== */
+
+.stats-list{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:18px;
+
+}
+
+.stat-item{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:18px 20px;
+
+    border-radius:14px;
+
+    background:#f8fafc;
+
+    transition:.3s;
+
+}
+
+.stat-item:hover{
+
+    background:#eef4ff;
+
+    transform:translateX(5px);
+
+}
+
+.stat-item span{
+
+    color:#64748b;
+
+    font-size:14px;
+
+}
+
+.stat-item strong{
+
+    font-size:18px;
+
+    color:#0f172a;
+
+}
+
+/* ==========================================
+        BOTTOM GRID
+========================================== */
+
+.bottom-grid{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:25px;
+
+}
+
+/* ==========================================
+            CALENDAR
+========================================== */
+
+#calendar{
+
+    height:260px;
+
+    border-radius:18px;
+
+    background:linear-gradient(135deg,#2563eb,#1d4ed8);
+
+    color:#fff;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+}
+
+#calendar h2{
+
+    font-size:55px;
+
+    margin-bottom:10px;
+
+}
+
+#calendar p{
+
+    font-size:18px;
+
+    opacity:.9;
+
+}
+
+/* ==========================================
+        UPCOMING EVENTS
+========================================== */
+
+.event-list{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:18px;
+
+}
+
+.event-card{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    background:#f8fafc;
+
+    padding:18px;
+
+    border-radius:14px;
+
+    transition:.3s;
+
+}
+
+.event-card:hover{
+
+    background:#eef4ff;
+
+    transform:translateY(-3px);
+
+}
+
+.event-card h4{
+
+    font-size:15px;
+
+    color:#0f172a;
+
+    margin-bottom:4px;
+
+}
+
+.event-card small{
+
+    color:#64748b;
+
+}
+
+.event-card span{
+
+    background:#2563eb;
+
+    color:#fff;
+
+    padding:8px 14px;
+
+    border-radius:30px;
+
+    font-size:12px;
+
+    font-weight:600;
+
+}
+
+/* ==========================================
+        EMPTY STATE
+========================================== */
+
+.booking-table td[colspan]{
+
+    text-align:center;
+
+    padding:40px;
+
+    color:#94a3b8;
+
+    font-size:15px;
+
+}
+/* ==========================================
+        FOOTER
+========================================== */
+
+.cms-footer{
+
+    margin-top:35px;
+
+    text-align:center;
+
+    padding:25px;
+
+    color:#94a3b8;
+
+    font-size:14px;
+
+}
+
+
+/* ==========================================
+        SCROLLBAR
+========================================== */
+
+::-webkit-scrollbar{
+
+    width:8px;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#2563eb;
+
+    border-radius:20px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#eef2f7;
+
+}
+
+
+/* ==========================================
+        ANIMATIONS
+========================================== */
+
+.dashboard-card,
+.dashboard-box{
+
+    animation:fadeUp .5s ease;
+
+}
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(20px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+
+/* ==========================================
+        RESPONSIVE
+========================================== */
+
+@media(max-width:1200px){
+
+    .dashboard-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .analytics-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .bottom-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+
+@media(max-width:992px){
+
+    .dashboard-cards{
+
+        grid-template-columns:repeat(2,1fr);
+
+    }
+
+    .header-actions{
+
+        width:100%;
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .dashboard-container{
+
+        padding:20px;
+
+    }
+
+    .page-header{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+    }
+
+    .header-actions{
+
+        display:flex;
+
+        flex-direction:column;
+
+        width:100%;
+
+    }
+
+    .action-btn{
+
+        width:100%;
+
+        justify-content:center;
+
+    }
+
+    .dashboard-cards{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .quick-actions{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .booking-table{
+
+        display:block;
+
+        overflow-x:auto;
+
+        white-space:nowrap;
+
+    }
+
+}
+
+@media(max-width:576px){
+
+    .page-header h1{
+
+        font-size:26px;
+
+    }
+
+    .card-content h2{
+
+        font-size:28px;
+
+    }
+
+    .dashboard-card{
+
+        padding:20px;
+
+    }
+
+    .card-icon{
+
+        width:60px;
+
+        height:60px;
+
+        font-size:24px;
+
+    }
+
+}
+
+
+/* ==========================================
+        UTILITIES
+========================================== */
+
+.text-center{
+
+    text-align:center;
+
+}
+
+.mt-20{
+
+    margin-top:20px;
+
+}
+
+.mt-30{
+
+    margin-top:30px;
+
+}
+
+.mb-20{
+
+    margin-bottom:20px;
+
+}
+
+.shadow{
+
+    box-shadow:0 12px 30px rgba(0,0,0,.08);
+
+}
+
+.rounded{
+
+    border-radius:20px;
+
+}

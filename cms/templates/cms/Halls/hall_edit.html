@@ -1,0 +1,374 @@
+{% extends 'cms/base.html' %}
+{% load static %}
+
+{% block title %}
+Edit Hall
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'cms/css/hall_edit.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="edit-page">
+
+    <div class="page-header">
+
+        <div>
+            <h1>Edit Hall</h1>
+            <p>Update hall information</p>
+        </div>
+
+        <a href="{% url 'cms:cms_hall_detail' hall.id %}" class="back-btn">
+            <i class="fa-solid fa-arrow-left"></i>
+            Back
+        </a>
+
+    </div>
+
+    <form method="POST" enctype="multipart/form-data">
+
+        {% csrf_token %}
+
+        <div class="glass-card">
+
+            <h2>Basic Information</h2>
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label>Hall Name</label>
+                    <input type="text" name="name" value="{{ hall.name }}">
+                </div>
+
+                <div class="form-group">
+                    <label>Slug</label>
+                    <input type="text" name="slug" value="{{ hall.slug }}">
+                </div>
+
+                <div class="form-group">
+                    <label>Price</label>
+                    <input type="number" step="0.01" name="price" value="{{ hall.price }}">
+                </div>
+
+                <div class="form-group">
+                    <label>Capacity</label>
+                    <input type="number" name="capacity" value="{{ hall.capacity }}">
+                </div>
+
+                <div class="form-group">
+                    <label>Location</label>
+                    <input type="text" name="location" value="{{ hall.location }}">
+                </div>
+
+                <div class="form-group">
+                    <label>Parking Capacity</label>
+                    <input type="number" name="parking_capacity" value="{{ hall.parking_capacity }}">
+                </div>
+
+            </div>
+
+            <div class="form-group full">
+
+                <label>Description</label>
+
+                <textarea name="description" rows="6">{{ hall.description }}</textarea>
+
+            </div>
+
+        </div>
+    </form>
+
+    <div class="glass-card">
+
+        <h2>Images</h2>
+
+        <div class="image-grid">
+
+            <div>
+
+                <label>Main Image</label>
+
+                {% if hall.image %}
+                <img src="{{ hall.image.url }}" class="preview-image">
+                {% endif %}
+
+                <input type="file" name="image">
+
+            </div>
+
+            <div>
+
+                <label>Banner Image</label>
+
+                {% if hall.banner_image %}
+                <img src="{{ hall.banner_image.url }}" class="preview-image">
+                {% endif %}
+
+                <input type="file" name="banner_image">
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="glass-card">
+
+        <h2>Settings</h2>
+
+        <div class="checkbox-grid">
+
+            <label><input type="checkbox" name="is_active" {% if hall.is_active %}checked{% endif %}> Active</label>
+
+            <label><input type="checkbox" name="is_featured" {% if hall.is_featured %}checked{% endif %}>
+                Featured</label>
+
+            <label><input type="checkbox" name="is_ac" {% if hall.is_ac %}checked{% endif %}> AC Available</label>
+
+            <label><input type="checkbox" name="is_wifi" {% if hall.is_wifi %}checked{% endif %}> WiFi
+                Available</label>
+
+            <label><input type="checkbox" name="show_badge" {% if hall.show_badge %}checked{% endif %}> Show
+                Badge</label>
+
+        </div>
+
+    </div>
+
+<!-- =========================
+     HALL FEATURES
+========================= -->
+
+    <div class="glass-card">
+
+        <div class="section-header">
+
+            <h2>
+
+                <i class="fa-solid fa-star"></i>
+
+                Hall Features
+
+            </h2>
+
+        </div>
+
+        <form method="POST" action="{% url 'cms:hall_feature_save' hall.id %}">
+
+            {% csrf_token %}
+
+            <input type="hidden" name="feature_id" id="feature_id">
+
+            <div class="feature-form">
+
+                <input type="text" name="title" id="feature_title" placeholder="Feature Title" required>
+
+                <input type="text" name="subtitle" id="feature_subtitle" placeholder="Subtitle">
+
+                <div style="display:flex; gap:10px;">
+
+                    <button type="submit" id="feature_btn" class="save-btn">
+
+                        <i class="fa-solid fa-plus"></i>
+
+                        Add Feature
+
+                    </button>
+
+                    <button type="button" class="back-btn" onclick="resetFeatureForm()">
+
+                        Cancel
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </form>
+
+        <div class="feature-list">
+
+            {% for feature in hall.features.all %}
+
+            <div class="feature-item">
+
+                <div class="feature-left">
+
+                    <i class="fa-solid fa-circle-check"></i>
+
+                    <div>
+
+                        <h4>{{ feature.title }}</h4>
+
+                        <small>{{ feature.subtitle }}</small>
+
+                    </div>
+
+                </div>
+
+                <div class="feature-right">
+
+                    <button type="button" class="edit-btn" onclick="editFeature(
+                        '{{ feature.id }}',
+                        '{{ feature.title|escapejs }}',
+                        '{{ feature.subtitle|escapejs }}'
+                    )">
+
+                        <i class="fa-solid fa-pen"></i>
+
+                    </button>
+
+                    <a href="{% url 'cms:hall_feature_delete' feature.id %}" class="delete-btn"
+                        onclick="return confirm('Delete Feature ?')">
+
+                        <i class="fa-solid fa-trash"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+            {% empty %}
+
+            <div class="empty-row">
+
+                No Feature Added
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+    <div class="glass-card">
+
+        <div class="section-header">
+
+            <h2>
+
+                <i class="fa-solid fa-images"></i>
+
+                Hall Gallery
+
+            </h2>
+
+        </div>
+
+        <form method="POST" enctype="multipart/form-data" action="{% url 'cms:hall_gallery_save' hall.id %}">
+
+            {% csrf_token %}
+
+            <div class="gallery-upload">
+
+                <input type="text" name="title" placeholder="Image Title">
+
+                <input type="file" name="hall_image" required>
+
+                <button type="submit" class="save-btn">
+
+                    <i class="fa-solid fa-upload"></i>
+
+                    Upload
+
+                </button>
+
+            </div>
+
+        </form>
+
+        <div class="gallery-grid">
+
+            {% for image in hall.gallery.all %}
+
+            <div class="gallery-card">
+
+                <img src="{{ image.hall_image.url }}">
+
+                <div class="gallery-info">
+
+                    <h4>{{ image.title }}</h4>
+
+                    <a href="{% url 'cms:hall_gallery_delete' image.id %}" class="delete-btn"
+                        onclick="return confirm('Delete Image ?')">
+
+                        <i class="fa-solid fa-trash"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+            {% empty %}
+
+            <div class="empty-row">
+
+                No Gallery Images
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+    <div class="submit-box">
+
+        <button type="submit" class="save-btn">
+
+            <i class="fa-solid fa-floppy-disk"></i>
+
+            Save Changes
+
+        </button>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+
+    function editFeature(id, title, subtitle) {
+
+        document.getElementById("feature_id").value = id;
+
+        document.getElementById("feature_title").value = title;
+
+        document.getElementById("feature_subtitle").value = subtitle;
+
+        document.getElementById("feature_btn").innerHTML =
+            '<i class="fa-solid fa-floppy-disk"></i> Update Feature';
+
+        document.getElementById("feature_title").focus();
+
+        window.scrollTo({
+            top: document.getElementById("feature_title").offsetTop - 150,
+            behavior: "smooth"
+        });
+
+    }
+
+    function resetFeatureForm() {
+
+        document.getElementById("feature_id").value = "";
+
+        document.getElementById("feature_title").value = "";
+
+        document.getElementById("feature_subtitle").value = "";
+
+        document.getElementById("feature_btn").innerHTML =
+            '<i class="fa-solid fa-plus"></i> Add Feature';
+
+    }
+
+</script>
+{% endblock %}
